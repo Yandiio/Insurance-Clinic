@@ -1,7 +1,7 @@
 {
     "version": 2,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.3.1" }
+        "api/index.php": { "runtime": "vercel-php@0.4.1" }
     },
     "routes": [
         {
@@ -11,9 +11,9 @@
     ],
     "env": {
         "APP_NAME": "Insurance Clinic",
-        "APP_ENV": "local",
-        "APP_DEBUG": "true",
-        "APP_URL": "https://insurance-clinic.vercel.app",
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "APP_URL": "https://insuranceclinic.vercel.app",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
