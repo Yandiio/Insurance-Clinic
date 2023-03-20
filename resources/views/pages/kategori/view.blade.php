@@ -2,8 +2,7 @@
 
 @section('content')
     @include('users.partials.header', [
-        'title' => __('Hello') . ' '. auth()->user()->name,
-        'description' => __('This is your profile page. You can see the progress you\'ve made with your work and manage your projects or assigned tasks'),
+        'title' => __('Buat Klaim Asuransi'),
         'class' => 'col-lg-7'
     ])   
 
@@ -13,7 +12,7 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         {{-- <div class="row align-items-center"> --}}
-                            <h3 class="mb-2">{{ __('Buat Klaim Asuransi') }}</h3>
+                            <h3 class="mb-2">{{ __('Detail Klaim Asuransi') }}</h3>
                         {{-- </div> --}}
                     </div>
                     <div class="card-body">
@@ -83,7 +82,7 @@
                                 </div>
 
                                 <div>
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button type="submit" class="btn btn-danger mt-4">{{ __('Back') }}</button>
                                 </div>
                             </div>
                         </form>
