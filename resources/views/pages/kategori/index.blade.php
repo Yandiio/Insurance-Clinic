@@ -25,7 +25,7 @@
     <div class="header-body">
         <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-                <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                <h6 class="h2 text-white d-inline-block mb-0">Kategori Penyakit</h6>
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                         <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></li>
@@ -57,59 +57,21 @@
                         <tr>
                             <th scope="col" class="sort" data-sort="name">No</th>
                             <th scope="col" class="sort" data-sort="budget">Nama Penyakit</th>
-                            <th scope="col" class="sort" data-sort="status">Status</th>
-                            <th scope="col" class="sort" data-sort="status">Kategori</th>
                             <th scope="col" class="sort" data-sort="completion">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="list">
+                        <?php $i = 1; ?>
+                        @foreach ($jenis_penyakit as $item)
                         <tr>
                             <th scope="row">
                                 <div class="media align-items-center">
-                                    <span class="name mb-0 text-sm">Argon Design System</span>
+                                    <span class="name mb-0 text-sm">{{$i}} </span>
                                 </div>
                             </th>
-                            <td class="budget">
-                                $2500 USD
-                            </td>
                             <td>
-                                <span class="badge badge-dot mr-4">
-                                    <i class="bg-warning"></i>
-                                    <span class="status">pending</span>
-                                </span>
+                                {{ $item->nama_penyakit }}
                             </td>
-                            <td>
-                                Admin22
-                                {{-- <div class="avatar-group">
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Ryan Tompson">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-1.jpg">
-                                    </a>
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Romina Hadid">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-2.jpg">
-                                    </a>
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Alexander Smith">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-3.jpg">
-                                    </a>
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Jessica Doe">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
-                                    </a>
-                                </div> --}}
-                            </td>
-                            {{-- <td>
-                                <div class="d-flex align-items-center">
-                                    <span class="completion mr-2">60%</span>
-                                    <div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60"
-                                                aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td> --}}
                             <td class="text-right">
                                 <div class="dropdown">
                                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
@@ -117,178 +79,15 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
+                                        <a class="dropdown-item" href="{{ route('kategori.edit', $item->id)}}">Edit</a>
+                                        <a class="dropdown-item" href="{{ route('kategori.view', $item->id)}}">View</a>
+                                        <a class="dropdown-item" href="{{ route('kategori.destroy', $item->id)}}">Delete</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <th scope="row">
-                                <div class="media align-items-center">
-                                    <span class="name mb-0 text-sm">Argon Design System</span>
-                                </div>
-                            </th>
-                            <td class="budget">
-                                $2500 USD
-                            </td>
-                            <td>
-                                <span class="badge badge-dot mr-4">
-                                    <i class="bg-warning"></i>
-                                    <span class="status">pending</span>
-                                </span>
-                            </td>
-                            <td>
-                                Admin22
-                                {{-- <div class="avatar-group">
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Ryan Tompson">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-1.jpg">
-                                    </a>
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Romina Hadid">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-2.jpg">
-                                    </a>
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Alexander Smith">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-3.jpg">
-                                    </a>
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Jessica Doe">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
-                                    </a>
-                                </div> --}}
-                            </td>
-                            {{-- <td>
-                                <div class="d-flex align-items-center">
-                                    <span class="completion mr-2">60%</span>
-                                    <div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60"
-                                                aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td> --}}
-                            <td class="text-right">
-                                <div class="dropdown">
-                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <div class="media align-items-center">
-                                    <span class="name mb-0 text-sm">Argon Design System</span>
-                                </div>
-                            </th>
-                            <td class="budget">
-                                $2500 USD
-                            </td>
-                            <td>
-                                <span class="badge badge-dot mr-4">
-                                    <i class="bg-warning"></i>
-                                    <span class="status">pending</span>
-                                </span>
-                            </td>
-                            <td>
-                                Admin22
-                                {{-- <div class="avatar-group">
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Ryan Tompson">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-1.jpg">
-                                    </a>
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Romina Hadid">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-2.jpg">
-                                    </a>
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Alexander Smith">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-3.jpg">
-                                    </a>
-                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                                        data-original-title="Jessica Doe">
-                                        <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
-                                    </a>
-                                </div> --}}
-                            </td>
-                            {{-- <td>
-                                <div class="d-flex align-items-center">
-                                    <span class="completion mr-2">60%</span>
-                                    <div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60"
-                                                aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td> --}}
-                            <td class="text-right">
-                                <div class="dropdown">
-                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <div class="media align-items-center">
-                                    <span class="name mb-0 text-sm">Argon Design System</span>
-                                </div>
-                            </th>
-                            <td class="budget">
-                                $2500 USD
-                            </td>
-                            <td>
-                                <span class="badge badge-dot mr-4">
-                                    <i class="bg-warning"></i>
-                                    <span class="status">pending</span>
-                                </span>
-                            </td>
-                            <td>
-                                Admin22
-                            </td>
-                            {{-- <td>
-                                <div class="d-flex align-items-center">
-                                    <span class="completion mr-2">60%</span>
-                                    <div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60"
-                                                aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td> --}}
-                            <td class="text-right">
-                                <div class="dropdown">
-                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="{{route('kategori.edit')}}">Edit</a>
-                                        <a class="dropdown-item" href="{{route('kategori.view')}}">View</a>
-                                        <a class="dropdown-item" href="#">Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        <?php $i++ ?>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -317,7 +116,7 @@
                         </li>
                     </ul>
                 </nav>
-            </div> 
+            </div>
         </div>
     </div>
 </div>

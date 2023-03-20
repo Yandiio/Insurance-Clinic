@@ -35,11 +35,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('kategori')->group(function() {
 		Route::get('/', [KategoriController::class, 'index'])->name('kategori.index');
 		Route::get('/create', [KategoriController::class, 'create'])->name('kategori.create');
-	// 	Route::get('/post', [KategoriController::class, 'store']);
-	// 	Route::get('/delete', [KategoriController::class, 'destroy']);
-		Route::get('/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
-	// 	Route::get('/update', [KategoriController::class, 'update']);
-		Route::get('/view', [KategoriController::class, 'view'])->name('kategori.view');
+		Route::post('/post', [KategoriController::class, 'store'])->name('kategori.post');
+		Route::get('/delete/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+		Route::get('/edit/{id}', [KategoriController::class, 'edit'])->name('kategori.edit');
+		Route::post('/update/{id}', [KategoriController::class, 'update'])->name('kategori.update');
+		Route::get('/view/{id}', [KategoriController::class, 'show'])->name('kategori.view');
 	});
 
 	Route::prefix('pasien')->namespace('App\Http\Controllers')->group(function() {

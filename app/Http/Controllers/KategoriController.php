@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JenisPenyakit;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -13,7 +14,8 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        return view('pages.kategori.index');
+        $jenis_penyakit = JenisPenyakit::orderBy('created_at', 'DESC')->paginate(7);
+        return view('pages.kategori.index', compact('jenis_penyakit'));
     }
 
     /**
@@ -34,7 +36,13 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_penyakit' => 'required'
+        ]);
+
+        JenisPenyakit::create($request->all());
+
+        return redirect()->route('kategori.index')->with('success', 'Jenis Penyakit berhasil ditambahkan');
     }
 
     /**
@@ -45,7 +53,8 @@ class KategoriController extends Controller
      */
     public function show($id)
     {
-        return view('pages.kategori.view');
+        $jenis_penyakit = JenisPenyakit::find($id);
+        return view('pages.kategori.view', compact('jenis_penyakit'));
     }
 
     /**
@@ -56,7 +65,8 @@ class KategoriController extends Controller
      */
     public function edit($id)
     {
-        return view('pages.kategori.edit');
+        $jenis_penyakit = JenisPenyakit::find($id);
+        return view('pages.kategori.edit', compact('jenis_penyakit'));
     }
 
     /**
@@ -68,7 +78,15 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_penyakit' => 'required'
+        ]);
+
+        $jenis_penyakit = JenisPenyakit::find($id);
+        $jenis_penyakit->nama_penyakit = $request->get('nama_penyakit');
+        $jenis_penyakit->save();
+
+        return redirect()->route('kategori.index')->with('success', 'Jenis Penyakit berhasil diupdate');
     }
 
     /**
@@ -79,6 +97,9 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $jenis_penyakit = JenisPenyakit::find($id);
+        $jenis_penyakit->delete();    
+    
+        return redirect()->route('kategori.index')->with('success', 'Jenis Penyakit berhasil dihapus');
     }
 }

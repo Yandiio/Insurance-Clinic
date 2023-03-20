@@ -4,7 +4,7 @@
         <!-- Brand -->
         <div class="sidenav-header  align-items-center">
             <a class="navbar-brand" href="javascript:void(0)">
-                <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+                <img src="#" alt="..." class="navbar-brand-img">
             </a>
         </div>
         <div class="navbar-inner">
@@ -28,7 +28,7 @@
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('kategori.index') }}">
-                                        {{ __('User Pengajuan') }}
+                                        {{ __('List Pasien') }}
                                     </a>
                                 </li>
                                 <li class="nav-item">
