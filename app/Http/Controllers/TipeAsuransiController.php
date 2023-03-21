@@ -46,7 +46,7 @@ class TipeAsuransiController extends Controller
 
         TipeAsuransi::create($request->all());
 
-        return redirect()->route('tipe_asuransi.index')->with('success', 'Jenis Penyakit berhasil ditambahkan');
+        return redirect()->route('tipe_asuransi.index')->with('success', 'Tipe Asuransi berhasil ditambahkan');
     }
 
     /**
@@ -98,7 +98,7 @@ class TipeAsuransiController extends Controller
         $tipe_asuransi->alamat = $request->get('alamat');
         $tipe_asuransi->save();
 
-        return redirect()->route('tipe_asuransi.index')->with('success', 'Jenis Penyakit berhasil diupdate');
+        return redirect()->route('tipe_asuransi.index')->with('success', 'Tipe Asuransi berhasil diupdate');
     }
 
     /**
@@ -112,6 +112,6 @@ class TipeAsuransiController extends Controller
         $tipe_asuransi = TipeAsuransi::find($id);
         $tipe_asuransi->delete();    
     
-        return redirect()->route('tipe_asuransi.index')->with('success', 'Jenis Penyakit berhasil dihapus');
+        return redirect()->route('tipe_asuransi.index')->with('success', 'Tipe Asuransi berhasil dihapus');
     }
 }

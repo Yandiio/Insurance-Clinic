@@ -29,5 +29,5 @@ class TipeAsuransi extends Model
      * @var array
      */
 
-    protected $attributes = ['nama', 'kode_asuransi', 'telepon', 'email', 'alamat', 'created_at', 'updated_at'];
+    protected $fillable = ['nama', 'kode_asuransi', 'telepon', 'email', 'alamat', 'created_at', 'updated_at'];
 }

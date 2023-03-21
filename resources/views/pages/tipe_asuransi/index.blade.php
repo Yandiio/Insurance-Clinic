@@ -57,7 +57,8 @@
                         <tr>
                             <th scope="col" class="sort" data-sort="name">No</th>
                             <th scope="col" class="sort" data-sort="budget">Nama Asuransi</th>
-                            <th scope="col" class="sort" data-sort="budget">No. Telp</th>
+                            <th scope="col" class="sort" data-sort="budget">Kode Asuransi</th>
+                            <th scope="col" class="sort" data-sort="budget">No. Telepon</th>
                             <th scope="col" class="sort" data-sort="budget">E-mail</th>
                             <th scope="col" class="sort" data-sort="budget">Alamat</th>
                             <th scope="col" class="sort" data-sort="completion">Aksi</th>

@@ -53,7 +53,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link" href="{{ route('kategori.index') }}">
-                          <i class="ni ni-paper-diploma text-orange"></i> {{ __('Reimburse') }}
+                          <i class="ni ni-paper-diploma text-green"></i> {{ __('Reimburse') }}
                       </a>
                     </li>
                 </ul>
