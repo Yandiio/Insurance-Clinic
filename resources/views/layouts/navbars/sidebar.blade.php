@@ -27,7 +27,7 @@
                         <div class="collapse show" id="navbar-examples">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('kategori.index') }}">
+                                    <a class="nav-link" href="{{ route('pasien.index') }}">
                                         {{ __('List Pasien') }}
                                     </a>
                                 </li>
@@ -37,7 +37,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                  <a class="nav-link" href="{{ route('kategori.index') }}">
+                                  <a class="nav-link" href="{{ route('tipe_asuransi.index') }}">
                                       {{ __('Asuransi') }}
                                   </a>
                               </li>

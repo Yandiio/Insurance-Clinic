@@ -25,17 +25,17 @@
     <div class="header-body">
         <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-                <h6 class="h2 text-white d-inline-block mb-0">Pasien</h6>
+                <h6 class="h2 text-white d-inline-block mb-0">Tipe Asuransi</h6>
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                         <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></li>
                         <li class="breadcrumb-item"><a>Data Master</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Pasien</li>
+                        <li class="breadcrumb-item active" aria-current="page">Tipe Asuransi</li>
                     </ol>
                 </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-                <a href="{{route('pasien.create')}}" class="btn btn-sm btn-neutral">Tambah</a>
+                <a href="{{route('tipe_asuransi.create')}}" class="btn btn-sm btn-neutral">Tambah</a>
                 <a href="#" class="btn btn-sm btn-neutral">Filter</a>
             </div>
         </div>
@@ -48,7 +48,7 @@
         <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-                <h3 class="mb-0">Pasien</h3>
+                <h3 class="mb-0">Tipe Asuransi</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -56,21 +56,16 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col" class="sort" data-sort="name">No</th>
-                            <th scope="col" class="sort" data-sort="budget">Nama Lengkap</th>
-                            <th scope="col" class="sort" data-sort="budget">TTL</th>
+                            <th scope="col" class="sort" data-sort="budget">Nama Asuransi</th>
+                            <th scope="col" class="sort" data-sort="budget">No. Telp</th>
+                            <th scope="col" class="sort" data-sort="budget">E-mail</th>
                             <th scope="col" class="sort" data-sort="budget">Alamat</th>
-                            <th scope="col" class="sort" data-sort="budget">Usia</th>
-                            <th scope="col" class="sort" data-sort="budget">Jenis Kelamin</th>
-                            <th scope="col" class="sort" data-sort="budget">Gol. Darah</th>
-                            <th scope="col" class="sort" data-sort="budget">Harga Obat</th>
-                            <th scope="col" class="sort" data-sort="budget">Harga Tindakan</th>
-                            <th scope="col" class="sort" data-sort="budget">Harga Lab</th>
                             <th scope="col" class="sort" data-sort="completion">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="list">
                         <?php $i = 1; ?>
-                        @foreach ($pasien as $item)
+                        @foreach ($tipe_asuransi as $item)
                         <tr>
                             <th scope="row">
                                 <div class="media align-items-center">
@@ -78,31 +73,19 @@
                                 </div>
                             </th>
                             <td>
-                                {{ $item->nama_lengkap }}
+                                {{ $item->nama }}
                             </td>
                             <td>
-                                {{ $item->tempat_lahir, $item->tanggal_lahir }}
+                                {{ $item->kode_asuransi }}
+                            </td>
+                            <td>
+                                {{ $item->telepon }}
+                            </td>
+                            <td>
+                                {{ $item->email }}
                             </td>
                             <td>
                                 {{ $item->alamat }}
-                            </td>
-                            <td>
-                                {{ $item->usia }}
-                            </td>
-                            <td>
-                                {{ $item->jenis_kelamin }}
-                            </td>
-                            <td>
-                                {{ $item->golongan_darah }}
-                            </td>
-                            <td>
-                                {{ $item->harga_obat }}
-                            </td>
-                            <td>
-                                {{ $item->harga_tindakan }}
-                            </td>
-                            <td>
-                                {{ $item->harga_lab }}
                             </td>
                             <td class="text-right">
                                 <div class="dropdown">
@@ -111,9 +94,9 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="{{ route('pasien.edit', $item->id)}}">Edit</a>
-                                        <a class="dropdown-item" href="{{ route('pasien.view', $item->id)}}">View</a>
-                                        <a class="dropdown-item" href="{{ route('pasien.destroy', $item->id)}}">Delete</a>
+                                        <a class="dropdown-item" href="{{ route('tipe_asuransi.edit', $item->id)}}">Edit</a>
+                                        <a class="dropdown-item" href="{{ route('tipe_asuransi.view', $item->id)}}">View</a>
+                                        <a class="dropdown-item" href="{{ route('tipe_asuransi.destroy', $item->id)}}">Delete</a>
                                     </div>
                                 </div>
                             </td>

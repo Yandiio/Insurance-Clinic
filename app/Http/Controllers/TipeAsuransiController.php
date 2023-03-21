@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TipeAsuransi;
 use Illuminate\Http\Request;
 
 class TipeAsuransiController extends Controller
@@ -13,7 +14,8 @@ class TipeAsuransiController extends Controller
      */
     public function index()
     {
-        //
+        $tipe_asuransi = TipeAsuransi::orderBy('created_at', 'DESC')->paginate(7);
+        return view('pages.tipe_asuransi.index', compact('tipe_asuransi'));
     }
 
     /**
@@ -23,7 +25,7 @@ class TipeAsuransiController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.tipe_asuransi.create');
     }
 
     /**
@@ -34,7 +36,17 @@ class TipeAsuransiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'kode_asuransi' => 'required',
+            'telepon' => 'required',
+            'email' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        TipeAsuransi::create($request->all());
+
+        return redirect()->route('tipe_asuransi.index')->with('success', 'Jenis Penyakit berhasil ditambahkan');
     }
 
     /**
@@ -45,7 +57,8 @@ class TipeAsuransiController extends Controller
      */
     public function show($id)
     {
-        //
+        $tipe_asuransi = TipeAsuransi::find($id);
+        return view('pages.tipe_asuransi.view', compact('tipe_asuransi'));
     }
 
     /**
@@ -56,7 +69,8 @@ class TipeAsuransiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tipe_asuransi = TipeAsuransi::find($id);
+        return view('pages.tipe_asuransi.edit', compact('tipe_asuransi'));
     }
 
     /**
@@ -68,7 +82,23 @@ class TipeAsuransiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'kode_asuransi' => 'required',
+            'telepon' => 'required',
+            'email' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        $tipe_asuransi = TipeAsuransi::find($id);
+        $tipe_asuransi->nama = $request->get('nama');
+        $tipe_asuransi->kode_asuransi = $request->get('kode_asuransi');
+        $tipe_asuransi->telepon = $request->get('telepon');
+        $tipe_asuransi->email = $request->get('email');
+        $tipe_asuransi->alamat = $request->get('alamat');
+        $tipe_asuransi->save();
+
+        return redirect()->route('tipe_asuransi.index')->with('success', 'Jenis Penyakit berhasil diupdate');
     }
 
     /**
@@ -79,6 +109,9 @@ class TipeAsuransiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tipe_asuransi = TipeAsuransi::find($id);
+        $tipe_asuransi->delete();    
+    
+        return redirect()->route('tipe_asuransi.index')->with('success', 'Jenis Penyakit berhasil dihapus');
     }
 }

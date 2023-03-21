@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\TipeAsuransiController;
+use App\Http\Controllers\PasienController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +16,9 @@ use App\Http\Controllers\KategoriController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
@@ -30,6 +32,24 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade'); 
+	// Route Klaim Asuransi
+	// Route::prefix('klaim_asuransi')->group(function() {
+	// 	Route::get('/', [KlaimAsuransiController::class, 'index'])->name('klaimasuransi.index');
+	// 	Route::get('/create', [KlaimAsuransiController::class, 'create'])->name('klaimasuransi.create');
+	// 	Route::post('/post', [KlaimAsuransiController::class, 'store'])->name('klaimasuransi.post');
+	// 	Route::get('/delete/{id}', [KlaimAsuransiController::class, 'destroy'])->name('klaimasuransi.destroy');
+	// 	Route::get('/edit/{id}', [KlaimAsuransiController::class, 'edit'])->name('klaimasuransi.edit');
+	// 	Route::post('/update/{id}', [KlaimAsuransiController::class, 'update'])->name('klaimasuransi.update');
+	// 	Route::get('/view/{id}', [KlaimAsuransiController::class, 'show'])->name('klaimasuransi.view');
+	// });
+
+	// Route Reimburse Asuransi
+	// Route::prefix('reimburse')->group(function() {
+	// 	Route::get('/', [ReimburseController::class, 'index'])->name('reimburse.index');
+	// 	Route::get('/edit/{id}', [ReimburseController::class, 'edit'])->name('reimburse.edit');
+	// 	Route::post('/update/{id}', [ReimburseController::class, 'update'])->name('reimburse.update');
+	// 	Route::get('/view/{id}', [ReimburseController::class, 'show'])->name('reimburse.view');
+	// });
 	
 	// Route Category
 	Route::prefix('kategori')->group(function() {
@@ -42,32 +62,26 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/view/{id}', [KategoriController::class, 'show'])->name('kategori.view');
 	});
 
-	Route::prefix('pasien')->namespace('App\Http\Controllers')->group(function() {
-		Route::get('/', function () {return view('pages.kategori.index');})->name('pasien.index');
-		Route::get('/view', function () {return view('pages.kategori.view');})->name('pasien.view');
-		Route::get('/create', function () {return view('pages.kategori.create');})->name('pasien.create');
-		Route::get('/update', function () {return view('pages.kategori.edit');})->name('pasien.edit');
-	// 	Route::get('/', [KategoriController::class, 'index']);
-	// 	Route::get('/create', [KategoriController::class, 'create']);
-	// 	Route::get('/post', [KategoriController::class, 'store']);
-	// 	Route::get('/delete', [KategoriController::class, 'destroy']);
-	// 	Route::get('/edit', [KategoriController::class, 'edit']);
-	// 	Route::get('/update', [KategoriController::class, 'update']);
-	// 	Route::get('/view', [KategoriController::class, 'view']);
+	// Route Pasien
+	Route::prefix('pasien')->group(function() {
+		Route::get('/', [PasienController::class, 'index'])->name('pasien.index');
+		Route::get('/create', [PasienController::class, 'create'])->name('pasien.create');
+		Route::post('/post', [PasienController::class, 'store'])->name('pasien.post');
+		Route::get('/delete/{id}', [PasienController::class, 'destroy'])->name('pasien.destroy');
+		Route::get('/edit/{id}', [PasienController::class, 'edit'])->name('pasien.edit');
+		Route::post('/update/{id}', [PasienController::class, 'update'])->name('pasien.update');
+		Route::get('/view/{id}', [PasienController::class, 'show'])->name('pasien.view');
 	});
 
-	Route::prefix('jenis_penyakit')->namespace('App\Http\Controllers')->group(function() {
-		Route::get('/', function () {return view('pages.kategori.index');})->name('jenis_penyakit.index');
-		Route::get('/view', function () {return view('pages.kategori.view');})->name('jenis_penyakit.view');
-		Route::get('/create', function () {return view('pages.kategori.create');})->name('jenis_penyakit.create');
-		Route::get('/update', function () {return view('pages.kategori.edit');})->name('jenis_penyakit.edit');
-	// 	Route::get('/', [KategoriController::class, 'index']);
-	// 	Route::get('/create', [KategoriController::class, 'create']);
-	// 	Route::get('/post', [KategoriController::class, 'store']);
-	// 	Route::get('/delete', [KategoriController::class, 'destroy']);
-	// 	Route::get('/edit', [KategoriController::class, 'edit']);
-	// 	Route::get('/update', [KategoriController::class, 'update']);
-	// 	Route::get('/view', [KategoriController::class, 'view']);
+	// Route Tipe Asuransi
+	Route::prefix('tipe_asuransi')->group(function() {
+		Route::get('/', [TipeAsuransiController::class, 'index'])->name('tipe_asuransi.index');
+		Route::get('/create', [TipeAsuransiController::class, 'create'])->name('tipe_asuransi.create');
+		Route::post('/post', [TipeAsuransiController::class, 'store'])->name('tipe_asuransi.post');
+		Route::get('/delete/{id}', [TipeAsuransiController::class, 'destroy'])->name('tipe_asuransi.destroy');
+		Route::get('/edit/{id}', [TipeAsuransiController::class, 'edit'])->name('tipe_asuransi.edit');
+		Route::post('/update/{id}', [TipeAsuransiController::class, 'update'])->name('tipe_asuransi.update');
+		Route::get('/view/{id}', [TipeAsuransiController::class, 'show'])->name('tipe_asuransi.view');
 	});
 
 	Route::get('icons', function () {return view('pages.icons');})->name('icons'); 
