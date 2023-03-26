@@ -14,8 +14,8 @@ class PasienController extends Controller
      */
     public function index()
     {
-        $pasien = Pasien::orderBy('created_at', 'DESC')->paginate(7);
-        return view('pages.pasien.index', compact('pasien'));
+        $pasien = Pasien::orderBy('created_at', 'DESC')->paginate(10);
+        return view('pages.pasien.index', ['pasien'=>$pasien]);
     }
 
     /**

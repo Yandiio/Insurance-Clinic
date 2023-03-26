@@ -10,7 +10,7 @@
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
                             <small>
-                                    Silahkan lakukan login dibawah ini <b>atau</b> Login dengan data sebagai in with these credentials:
+                                    Silahkan lakukan login dibawah ini <b>atau</b> Login dengan data sebagai:
                                     <br>
                                     Username <strong>admin@argon.com</strong> Password: <strong>secret</strong>
                             </small>

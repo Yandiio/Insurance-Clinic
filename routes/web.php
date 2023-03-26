@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\TipeAsuransiController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\ReimburseController;
+use App\Http\Controllers\KlaimAsuransiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,34 +24,34 @@ use App\Http\Controllers\PasienController;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade'); 
+
 	// Route Klaim Asuransi
-	// Route::prefix('klaim_asuransi')->group(function() {
-	// 	Route::get('/', [KlaimAsuransiController::class, 'index'])->name('klaimasuransi.index');
-	// 	Route::get('/create', [KlaimAsuransiController::class, 'create'])->name('klaimasuransi.create');
-	// 	Route::post('/post', [KlaimAsuransiController::class, 'store'])->name('klaimasuransi.post');
-	// 	Route::get('/delete/{id}', [KlaimAsuransiController::class, 'destroy'])->name('klaimasuransi.destroy');
-	// 	Route::get('/edit/{id}', [KlaimAsuransiController::class, 'edit'])->name('klaimasuransi.edit');
-	// 	Route::post('/update/{id}', [KlaimAsuransiController::class, 'update'])->name('klaimasuransi.update');
-	// 	Route::get('/view/{id}', [KlaimAsuransiController::class, 'show'])->name('klaimasuransi.view');
-	// });
+	Route::prefix('klaim_asuransi')->group(function() {
+		Route::get('/list', [KlaimAsuransiController::class, 'index'])->name('klaimasuransi.index');
+		Route::get('/create', [KlaimAsuransiController::class, 'create'])->name('klaimasuransi.create');
+		Route::post('/post', [KlaimAsuransiController::class, 'claimInsurance'])->name('klaimasuransi.post');
+		Route::get('/delete/{id}', [KlaimAsuransiController::class, 'deleteInsurance'])->name('klaimasuransi.destroy');
+		Route::get('/edit/{id}', [KlaimAsuransiController::class, 'edit'])->name('klaimasuransi.edit');
+		Route::post('/update/{id}', [KlaimAsuransiController::class, 'updateInsurance'])->name('klaimasuransi.update');
+		Route::get('/view/{id}', [KlaimAsuransiController::class, 'detailInsurance'])->name('klaimasuransi.view');
+	});
 
 	// Route Reimburse Asuransi
-	// Route::prefix('reimburse')->group(function() {
-	// 	Route::get('/', [ReimburseController::class, 'index'])->name('reimburse.index');
-	// 	Route::get('/edit/{id}', [ReimburseController::class, 'edit'])->name('reimburse.edit');
-	// 	Route::post('/update/{id}', [ReimburseController::class, 'update'])->name('reimburse.update');
-	// 	Route::get('/view/{id}', [ReimburseController::class, 'show'])->name('reimburse.view');
-	// });
+	Route::prefix('reimburse')->group(function() {
+		Route::get('/', [ReimburseController::class, 'index'])->name('reimburse.index');
+		Route::post('/klaim', [ReimburseController::class, 'klaimInsurance'])->name('reimburse.klaim');
+		Route::get('/view/{id}', [ReimburseController::class, 'show'])->name('reimburse.view');
+	});
 	
 	// Route Category
 	Route::prefix('kategori')->group(function() {

@@ -15,7 +15,7 @@ class KategoriController extends Controller
     public function index()
     {
         $jenis_penyakit = JenisPenyakit::orderBy('created_at', 'DESC')->paginate(7);
-        return view('pages.kategori.index', compact('jenis_penyakit'));
+        return view('pages.kategori.index', ['jenis_penyakit' => $jenis_penyakit]);
     }
 
     /**

@@ -14,8 +14,8 @@ class TipeAsuransiController extends Controller
      */
     public function index()
     {
-        $tipe_asuransi = TipeAsuransi::orderBy('created_at', 'DESC')->paginate(7);
-        return view('pages.tipe_asuransi.index', compact('tipe_asuransi'));
+        $tipe_asuransi = TipeAsuransi::orderBy('created_at', 'DESC')->paginate(10);
+        return view('pages.tipe_asuransi.index', ['tipe_asuransi' => $tipe_asuransi]);
     }
 
     /**

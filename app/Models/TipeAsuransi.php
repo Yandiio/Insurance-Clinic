@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class TipeAsuransi extends Model
 {
@@ -30,4 +31,9 @@ class TipeAsuransi extends Model
      */
 
     protected $fillable = ['nama', 'kode_asuransi', 'telepon', 'email', 'alamat', 'created_at', 'updated_at'];
+
+    public function klaimAsuransi(): HasOne
+    {
+        return $this->hasOne(KlaimAsuransi::class);
+    }
 }
