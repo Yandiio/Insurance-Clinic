@@ -27,25 +27,31 @@
 
                         <div class="collapse show" id="navbar-examples">
                             <ul class="nav nav-sm flex-column">
+                                @if(Auth::user()->roles[0]['name'] == 'Staff' || Auth::user()->roles[0]['name'] == 'Admin')
                                 <li class="nav-item">
                                     <a class="nav-link {{ request()->is('pasien') ? 'active' : '' }}" href="{{ route('pasien.index') }}">
                                         {{ __('List Pasien') }}
                                     </a>
                                 </li>
+                                @endif
+                                @if(Auth::user()->roles[0]['name'] == 'Admin')
                                 <li class="nav-item">
                                     <a class="nav-link {{ request()->is('kategori') ? 'active' : '' }}" href="{{ route('kategori.index') }}">
                                         {{ __('Kategori Penyakit') }}
                                     </a>
                                 </li>
+                                @endif
+                                @if(Auth::user()->roles[0]['name'] == 'Admin')
                                 <li class="nav-item">
                                   <a class="nav-link {{ request()->is('tipe_asuransi') ? 'active' : '' }}" href="{{ route('tipe_asuransi.index') }}">
                                       {{ __('Asuransi') }}
                                   </a>
                               </li>
+                              @endif
+
                             </ul>
                         </div>
                     </li>
-
                     <li class="nav-item">
                       <a class="nav-link {{ request()->is('klaim_asuransi/list') ? 'active' : '' }}" href="{{ route('klaimasuransi.index') }}">
                           <i class="ni ni-ambulance text-red"></i> {{ __('Klaim Asuransi') }}
@@ -53,9 +59,11 @@
                     </li>
 
                     <li class="nav-item">
+                    @if(Auth::user()->roles[0]['name'] == 'Admin')
                       <a class="nav-link {{ request()->is('reimburse') ? 'active' : '' }}" href="{{ route('reimburse.index') }}">
                           <i class="ni ni-paper-diploma text-green"></i> {{ __('Reimburse') }}
                       </a>
+                    @endif
                     </li>
                 </ul>
             </div>

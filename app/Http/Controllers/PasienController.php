@@ -45,7 +45,6 @@ class PasienController extends Controller
         ]);
 
         $requestData = $request->all();
-        $requestData['agama'] = 'Islam';
         Pasien::create($requestData);
 
         return redirect()->route('pasien.index')->with('success', 'Pasien berhasil ditambahkan');
@@ -61,6 +60,20 @@ class PasienController extends Controller
     {
         $pasien = Pasien::find($id);
         return view('pages.pasien.view', compact('pasien'));
+    }
+
+    /**
+     * Display the specified resource into json.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function find(Request $request)
+    {
+        if (isset($request->id)) {
+            $pasien = Pasien::find($request->id);
+            return response()->json(['message'=>'success', 'data' => $pasien]);
+        }
     }
 
     /**
