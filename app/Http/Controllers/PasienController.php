@@ -7,15 +7,6 @@ use Illuminate\Http\Request;
 
 class PasienController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('permission:pasien-list|pasien-create|pasien-edit|pasien-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:pasien-create', ['only' => ['create','store']]);
-        $this->middleware('permission:pasien-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:pasien-delete', ['only' => ['destroy']]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -54,7 +45,6 @@ class PasienController extends Controller
         ]);
 
         $requestData = $request->all();
-        $requestData['agama'] = 'Islam';
         Pasien::create($requestData);
 
         return redirect()->route('pasien.index')->with('success', 'Pasien berhasil ditambahkan');
@@ -70,6 +60,20 @@ class PasienController extends Controller
     {
         $pasien = Pasien::find($id);
         return view('pages.pasien.view', compact('pasien'));
+    }
+
+    /**
+     * Display the specified resource into json.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function find(Request $request)
+    {
+        if (isset($request->id)) {
+            $pasien = Pasien::find($request->id);
+            return response()->json(['message'=>'success', 'data' => $pasien]);
+        }
     }
 
     /**

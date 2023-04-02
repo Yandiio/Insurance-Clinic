@@ -168,7 +168,6 @@
             data = this.dataset.konfirmasiId;
         });
 
-
         $('#konfirmasi').click(function(e) {
             console.log(data);
             e.preventDefault();

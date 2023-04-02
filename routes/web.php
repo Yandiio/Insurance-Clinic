@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/edit/{id}', [PasienController::class, 'edit'])->name('pasien.edit');
 		Route::post('/update/{id}', [PasienController::class, 'update'])->name('pasien.update');
 		Route::get('/view/{id}', [PasienController::class, 'show'])->name('pasien.view');
+		Route::get('/find', [PasienController::class, 'find'])->name('pasien.find');
 	});
 
 	// Route Tipe Asuransi

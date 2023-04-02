@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('usia');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('golongan_darah');
-            $table->string('agama');
+            $table->string('agama')->nullable();
             // $table->unsignedBigInteger('id_asuransi');
             // $table->foreign('id_asuransi')->references('id')->on('klaim_asuransi');
             $table->integer('harga_obat')->nullable();

@@ -128,6 +128,16 @@
                                             </span>
                                         @endif
                                     </div>
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('agama') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-agama">{{ __('Agama') }}</label>
+                                        <input type="text" id="input-agama" class="form-control form-control-alternative{{ $errors->has('agama') ? ' is-invalid' : '' }}" placeholder="{{ __('Agama') }}" >
+    
+                                        @if ($errors->has('agama'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('agama') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <hr class="my-4" />
@@ -200,3 +210,38 @@
         @include('layouts.footers.auth')
     </div>
 @endsection
+
+<script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#input-nama-lengkap').click(function(e) {
+            let val = $(this).val();
+
+            $.ajax({
+                type: 'get',
+                url: '{{route('pasien.find')}}',
+                data: {
+                    id: val,
+                },
+                success: function(res) {
+                    let result = res.data;
+                    let splitDate = result.tanggal_lahir;
+
+                    let parts = splitDate.split("/").reverse().reverse().join('-');
+
+                    document.getElementById('input-nik').value = result.nik;
+                    document.getElementById('input-jenis-kelamin').value = result.jenis_kelamin;
+                    document.getElementById('input-tempat-lahir').value = result.tempat_lahir;
+                    document.getElementById('input-gol-darah').value = result.golongan_darah;
+                    document.getElementById('input-tanggal-lahir').value = parts;
+                    document.getElementById('input-alamat').value = result.alamat;
+                    document.getElementById('input-usia').value = result.usia;
+                    document.getElementById('input-agama').value = result.agama;
+                }, 
+                error: function(err) {
+                    alert("data tidak ditemukan");
+                }
+            });
+        });
+   });
+</script>
