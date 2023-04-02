@@ -15,7 +15,9 @@
             </div>
             <div class="col-lg-6 col-5 text-right">
                 <a href="{{route('klaimasuransi.export')}}" class="btn btn-sm btn-neutral">Export</a>
+                @if(Auth::user()->roles[0]['name'] == 'Staff')
                 <a href="{{route('klaimasuransi.create')}}" class="btn btn-sm btn-neutral">Tambah</a>
+                @endif
                 <a href="#" data-toggle="dropdown" class="btn btn-sm btn-neutral">Filter</a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
