@@ -8,6 +8,8 @@ use App\Models\TipeAsuransi;
 use App\Models\KlaimAsuransi;
 use App\Models\StatusReimburse;
 use Illuminate\Http\Request;
+use App\Exports\KlaimAsuransiExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KlaimAsuransiController extends Controller
 {
@@ -134,5 +136,15 @@ class KlaimAsuransiController extends Controller
     public function deleteInsurance($id)
     {
         //
+    }
+
+    /**
+     * Export data into excel.
+     * 
+     * @return \Maatwebsite\Excel\Facades\Excel
+     */
+    public function export() 
+    {
+        return Excel::download(new KlaimAsuransiExport, 'data_klaim_asuransi.xlsx');    
     }
 }

@@ -34,7 +34,7 @@
                 </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-                <a href="#" class="btn btn-sm btn-neutral">Export</a>
+                <a href="{{route('klaimasuransi.export')}}" class="btn btn-sm btn-neutral">Export</a>
                 <a href="{{route('klaimasuransi.create')}}" class="btn btn-sm btn-neutral">Tambah</a>
                 <a href="#" class="btn btn-sm btn-neutral">Filter</a>
             </div>

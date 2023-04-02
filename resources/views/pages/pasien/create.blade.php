@@ -123,6 +123,17 @@
                                             </span>
                                         @endif
                                     </div>
+
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('agama') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-agama">{{ __('Agama') }}</label>
+                                        <input type="text" name="agama" id="input-agama" class="form-control form-control-alternative{{ $errors->has('agama') ? ' is-invalid' : '' }}" placeholder="{{ __('Agama') }}" required>
+    
+                                        @if ($errors->has('agama'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('agama') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <hr class="my-4" />

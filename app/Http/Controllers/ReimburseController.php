@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KlaimAsuransi;
+use App\Exports\ReimburseExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReimburseController extends Controller
 {
@@ -49,5 +51,15 @@ class ReimburseController extends Controller
         }
 
         return response()->json(['message' => 'Data Tidak dapat diproses. ada kesalahan pada sistem']);
+    }
+
+    /**
+     * Export data into excel.
+     * 
+     * @return \Maatwebsite\Excel\Facades\Excel
+     */
+    public function export() 
+    {
+        return Excel::download(new ReimburseExport, 'data_reimburse.xlsx');    
     }
 }
