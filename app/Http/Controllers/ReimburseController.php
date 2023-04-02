@@ -27,9 +27,13 @@ class ReimburseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function search(Request $request) 
     {
-        //
+        $reimburse = KlaimAsuransi::where(function($e) use($request) {
+            return $e->where('id_statusklaim', $request->status);
+        })->paginate(10);
+
+        return view('pages.reimburse.search', compact('reimburse'));
     }
 
     /**

@@ -5,29 +5,27 @@
     <div class="header-body">
         <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-                <h6 class="h2 text-white d-inline-block mb-0">Klaim Asuransi</h6>
+                <h6 class="h2 text-white d-inline-block mb-0">Reimburse</h6>
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                         <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Klaim Asuransi</li>
+                        <li class="breadcrumb-item active" aria-current="page">Reimburse</li>
                     </ol>
                 </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-                <a href="{{route('klaimasuransi.export')}}" class="btn btn-sm btn-neutral">Export</a>
-                <a href="{{route('klaimasuransi.create')}}" class="btn btn-sm btn-neutral">Tambah</a>
+                <a href="{{route('reimburse.export')}}" class="btn btn-sm btn-neutral">Export</a>
                 <a href="#" data-toggle="dropdown" class="btn btn-sm btn-neutral">Filter</a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
                         <h6 class="text-overflow m-0">{{ __('Filter') }}</h6>
                     </div>
-                    <form method="post" action="{{route('klaimasuransi.search')}}">
+                    <form method="post" action="{{route('reimburse.search')}}">
                         @csrf
                         @method('post')
                         <div class="dropdown-item">
                             <label class="form-control-label" for="status-klaim">{{ __('Status') }}</label>
                             <select class="form-control form-control-alternative" name="status" id="status-klaim">
-                                <option value="1">Belum di klaim</option>
                                 <option value="2">Menunggu Permohonan</option>
                                 <option value="3">Sudah di klaim</option>
                             </select>                        
@@ -41,7 +39,7 @@
                             <button type="submit" style="margin-left: 10px;" class="btn btn-primary">
                                 <span>Cari</span>
                             </button>
-                            <a href="{{route('klaimasuransi.index')}}" style="margin-left: 5px; color: white;" class="btn btn-danger">
+                            <a href="{{route('reimburse.index')}}" style="margin-left: 5px; color: white;" class="btn btn-danger">
                                 <span>Reset</span>
                             </a>
                         </div>
@@ -58,7 +56,7 @@
         <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-                <h3 class="mb-0">Klaim Asuransi</h3>
+                <h3 class="mb-0">Reimburse</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -79,7 +77,7 @@
                     </thead>
                     <tbody class="list">
                         <?php $i = 1; ?>
-                        @foreach ($klaim_asuransi as $item)
+                        @foreach ($reimburse as $item)
                         <tr>
                             <th scope="row">
                                 <div class="media align-items-center">
@@ -90,7 +88,6 @@
                                 {{ $item->no_klaim }}
                             </td>
                             <td>
-                                {{-- - --}}
                                 {{ $item->pasien->nama_lengkap }}
                             </td>
                             <td>
@@ -116,9 +113,8 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="{{ route('klaimasuransi.edit', $item->id)}}">Edit</a>
+                                        <a id="konfirm-modal" class="dropdown-item" data-toggle="modal" data-konfirmasi-id="{{$item->id}}" data-target="#modalKonfirmasi">Klaim</a>
                                         <a class="dropdown-item" href="{{ route('klaimasuransi.view', $item->id)}}">View</a>
-                                        <a class="dropdown-item" href="{{ route('klaimasuransi.destroy', $item->id)}}">Delete</a>
                                     </div>
                                 </div>
                             </td>
@@ -129,11 +125,30 @@
                 </table>
             </div>
 
+            <div class="modal fade" id="modalKonfirmasi" tabindex="-1" role="dialog" aria-labelledby="labelModalKonfirmasi" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modalKonfirmasi">Konfirmasi Klaim Asuransi</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Apakah anda yakin akan reimburse data?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" id="konfirmasi" class="btn btn-primary">Klaim Asuransi</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
             <!-- Card footer -->
             <div class="card-footer py-4">
                 <nav aria-label="...">
                     <ul class="pagination justify-content-end mb-0">
-                         {{$klaim_asuransi->links()}}
+                         {{$reimburse->links()}}
                     </ul>
                 </nav>
             </div>
@@ -141,3 +156,37 @@
     </div>
 </div>
 @endsection
+
+<script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        
+        let data = null;
+
+        $('#konfirm-modal').click(function(e) {
+            data = this.dataset.konfirmasiId;
+        });
+
+
+        $('#konfirmasi').click(function(e) {
+            console.log(data);
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('reimburse.klaim') }}',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: data,
+                },
+                success: function(data) {
+                    alert('data berhasil diproses');
+                }, 
+                error: function(err) {
+                    alert('data tidak dapat diproses');
+                }
+            });
+        });
+   });
+</script>
+

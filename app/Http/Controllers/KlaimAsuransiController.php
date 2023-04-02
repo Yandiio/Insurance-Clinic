@@ -64,6 +64,15 @@ class KlaimAsuransiController extends Controller
         return redirect()->route('klaimasuransi.index')->with('success', 'klaim berhasil ditambahkan');
     }
 
+    public function search(Request $request) 
+    {
+        $klaim_asuransi = KlaimAsuransi::where(function($e) use ($request) {
+            return $e->where('id_statusklaim', $request->status);
+        })->paginate(10);
+
+        return view('pages.klaim_asuransi.index', compact('klaim_asuransi'));
+    }
+
     /**
      * Display the specified resource.
      *
