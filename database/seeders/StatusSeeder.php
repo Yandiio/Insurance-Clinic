@@ -20,7 +20,7 @@ class StatusSeeder extends Seeder
         $status->save();
 
         $status = new StatusReimburse;
-        $status->status = "Diproses";
+        $status->status = "Menunggu Permohonan";
         $status->save();
 
         $status = new StatusReimburse;

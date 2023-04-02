@@ -1,25 +1,5 @@
 @extends('layouts.section')
 
-@section('header')
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <!-- Search form -->
-    <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-        <div class="form-group mb-0">
-            <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
-            </div>
-        </div>
-        <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main"
-            aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-    </form>
-</div>
-@endsection
-
 @section('subheader')
 <div class="container-fluid">
     <div class="header-body">
@@ -34,9 +14,38 @@
                 </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-                <a href="#" class="btn btn-sm btn-neutral">Export</a>
-                <a href="{{route('klaimasuransi.create')}}" class="btn btn-sm btn-neutral">Tambah</a>
-                <a href="#" class="btn btn-sm btn-neutral">Filter</a>
+                <a href="{{route('reimburse.export')}}" class="btn btn-sm btn-neutral">Export</a>
+                <a href="#" data-toggle="dropdown" class="btn btn-sm btn-neutral">Filter</a>
+                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                    <div class=" dropdown-header noti-title">
+                        <h6 class="text-overflow m-0">{{ __('Filter') }}</h6>
+                    </div>
+                    <form method="post" action="{{route('reimburse.search')}}">
+                        @csrf
+                        @method('post')
+                        <div class="dropdown-item">
+                            <label class="form-control-label" for="status-klaim">{{ __('Status') }}</label>
+                            <select class="form-control form-control-alternative" name="status" id="status-klaim">
+                                <option value="1">Belum di klaim</option>
+                                <option value="2">Menunggu Permohonan</option>
+                                <option value="3">Sudah di klaim</option>
+                            </select>                        
+                        </div>
+                        <div class="dropdown-item">
+                            <label class="form-control-label" for="pencarian">{{ __('Pencarian') }}</label>
+                            <input type="text" name="pencarian" id="pencarian" class="form-control form-control-alternative{{ $errors->has('pencarian') ? ' is-invalid' : '' }}" placeholder="{{ __('Pencarian') }}">
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item row">
+                            <button type="submit" style="margin-left: 10px;" class="btn btn-primary">
+                                <span>Cari</span>
+                            </button>
+                            <a onclick="location.reload()" style="margin-left: 5px;" class="btn btn-danger">
+                                <span>Reset</span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
