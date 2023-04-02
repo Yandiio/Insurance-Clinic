@@ -35,7 +35,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade'); 
 
-	// Route Klaim Asuransi
 	Route::prefix('klaim_asuransi')->group(function() {
 		Route::get('/list', [KlaimAsuransiController::class, 'index'])->name('klaimasuransi.index');
 		Route::get('/create', [KlaimAsuransiController::class, 'create'])->name('klaimasuransi.create');

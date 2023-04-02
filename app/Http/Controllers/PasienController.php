@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class PasienController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:pasien-list|pasien-create|pasien-edit|pasien-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:pasien-create', ['only' => ['create','store']]);
+        $this->middleware('permission:pasien-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:pasien-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
