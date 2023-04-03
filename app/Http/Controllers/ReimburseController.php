@@ -45,7 +45,7 @@ class ReimburseController extends Controller
     public function klaimInsurance(Request $request)
     {
         if (isset($request->id)) {
-            $claimed = KlaimAsuransi::find($id);
+            $claimed = KlaimAsuransi::find($request->id);
 
             $claimed->id_statusklaim = 3;
             // $claimed->updated_at = Carbon::now();
