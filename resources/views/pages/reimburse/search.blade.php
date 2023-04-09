@@ -26,6 +26,7 @@
                         <div class="dropdown-item">
                             <label class="form-control-label" for="status-klaim">{{ __('Status') }}</label>
                             <select class="form-control form-control-alternative" name="status" id="status-klaim">
+                                <option value="">Pilih Status</option>
                                 <option value="2">Menunggu Permohonan</option>
                                 <option value="3">Sudah di klaim</option>
                             </select>                        
@@ -88,13 +89,13 @@
                                 {{ $item->no_klaim }}
                             </td>
                             <td>
-                                {{ $item->pasien->nama_lengkap }}
+                                {{ $item->nama_lengkap }}
                             </td>
                             <td>
-                                {{ $item->asuransi->nama }}
+                                {{ $item->nama_asuransi }}
                             </td>
                             <td>
-                                {{ $item->statusKlaim->status }}
+                                {{ $item->status_klaim }}
                             </td>
                             <td>
                                 {{ $item->obat }}
@@ -167,6 +168,9 @@
             data = this.dataset.konfirmasiId;
         });
 
+        $('.dropdown-menu').click(function(e) {
+            e.stopPropagation();
+        });
 
         $('#konfirmasi').click(function(e) {
             console.log(data);

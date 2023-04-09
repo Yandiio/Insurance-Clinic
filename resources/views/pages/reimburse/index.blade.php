@@ -26,7 +26,7 @@
                         <div class="dropdown-item">
                             <label class="form-control-label" for="status-klaim">{{ __('Status') }}</label>
                             <select class="form-control form-control-alternative" name="status" id="status-klaim">
-                                <option value="1">Belum di klaim</option>
+                                <option value="">Pilih Status</option>
                                 <option value="2">Menunggu Permohonan</option>
                                 <option value="3">Sudah di klaim</option>
                             </select>                        
@@ -166,6 +166,10 @@
 
         $('#konfirm-modal').click(function(e) {
             data = this.dataset.konfirmasiId;
+        });
+
+        $('.dropdown-menu').click(function(e) {
+            e.stopPropagation();
         });
 
         $('#konfirmasi').click(function(e) {
