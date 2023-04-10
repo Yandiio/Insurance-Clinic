@@ -89,7 +89,7 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        @if (Auth::user()->role === 2)
+                                        @if (Auth::user()->roles[0]['name'] == 'Staff')
                                             <a class="dropdown-item" href="{{ route('pasien.edit', $item->id)}}">Edit</a>
                                         @endif
                                         <a class="dropdown-item" href="{{ route('pasien.view', $item->id)}}">View</a>
