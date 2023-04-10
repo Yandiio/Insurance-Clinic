@@ -92,7 +92,7 @@ class KlaimAsuransiController extends Controller
         $klaim_asuransi = $klaim_asuransi->paginate(10);
 
         return view('pages.klaim_asuransi.search', compact('klaim_asuransi'));
-    }
+     }
 
     /**
      * Display the specified resource.
