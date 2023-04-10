@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="form-group p-1 col-lg-6 {{ $errors->has('tanggal_lahir') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-tanggal-lahir">{{ __('Tanggal Lahir') }}</label>
-                                        <input type="date" name="tanggal_lahir" value="{{$pasien->tanggal_lahir}}" id="input-tanggal-lahir" class="form-control form-control-alternative{{ $errors->has('tanggal_lahir') ? ' is-invalid' : '' }}" placeholder="{{ __('Tanggal lahir') }}" disabled>
+                                        <input type="date" name="tanggal_lahir" data-value="{{$pasien->tanggal_lahir}}" id="input-tanggal-lahir" class="form-control form-control-alternative{{ $errors->has('tanggal_lahir') ? ' is-invalid' : '' }}" placeholder="{{ __('Tanggal lahir') }}" disabled>
     
                                         @if ($errors->has('tanggal_lahir'))
                                             <span class="invalid-feedback" role="alert">
@@ -174,3 +174,16 @@
         @include('layouts.footers.auth')
     </div>
 @endsection
+
+<script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const data = document.querySelector("#input-tanggal-lahir");
+        let splitDate = data.dataset.value;
+
+        let parts = splitDate.split("/").reverse().reverse().join('-');
+
+        console.log(parts);
+        $('#input-tanggal-lahir').val(parts);
+    });
+</script>
