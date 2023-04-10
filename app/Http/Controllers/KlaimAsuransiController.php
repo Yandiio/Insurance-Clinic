@@ -49,6 +49,7 @@ class KlaimAsuransiController extends Controller
     {
         $request->validate([
             'nama_lengkap' => 'required',
+            'tipe_asuransi' => 'required',
         ]);
 
         KlaimAsuransi::create([

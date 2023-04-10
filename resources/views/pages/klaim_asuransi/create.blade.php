@@ -143,7 +143,7 @@
                                 <hr class="my-4" />
 
                                 <div class="d-flex justify-content-around">
-                                    <div class="form-group p-1 col-lg-12 {{ $errors->has('tipe-asuransi') ? ' has-danger' : '' }}">
+                                    <div class="form-group p-1 col-lg-12 {{ $errors->has('tipe_asuransi') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-tipe-asuransi">{{ __('Tipe Asuransi') }}</label>
                                         <select class="form-control form-control-alternative" name="tipe_asuransi" id="input-tipe-asuransi">
                                             <option value="">Pilih Asuransi </option>
@@ -152,9 +152,9 @@
                                             @endforeach
                                         </select>
     
-                                        @if ($errors->has('tipe-asuransi'))
+                                        @if ($errors->has('tipe_asuransi'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('tipe-asuransi') }}</strong>
+                                                <strong>{{ $errors->first('tipe_asuransi') }}</strong>
                                             </span>
                                         @endif
                                     </div>

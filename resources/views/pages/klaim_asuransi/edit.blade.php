@@ -160,13 +160,13 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('tindakan') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-tindakan">{{ __('Tindakan') }}</label>
-                                        <input type="text" value="{{$already_claim->tindakan}}" name="tindakan" id="input-tindakan" class="form-control form-control-alternative{{ $errors->has('tindakan') ? ' is-invalid' : '' }}" placeholder="{{ __('Tindakan') }}" >
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('harga_obat') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-harga-obat">{{ __('Harga Obat') }}</label>
+                                        <input type="number" value="{{$pasien_claim->harga_obat}}" name="harga-obat" id="input-harga-obat" class="form-control form-control-alternative{{ $errors->has('harga_obat') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Obat') }}" >
     
-                                        @if ($errors->has('tindakan'))
+                                        @if ($errors->has('harga_obat'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('tindakan') }}</strong>
+                                                <strong>{{ $errors->first('obat') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -182,7 +182,40 @@
                                             </span>
                                         @endif
                                     </div>
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('harga_lab') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-harga-lab">{{ __('Harga Lab') }}</label>
+                                        <input type="number" value="{{$pasien_claim->harga_lab}}" name="harga-lab" id="input-harga-lab" class="form-control form-control-alternative{{ $errors->has('harga_lab') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Lab') }}">
+    
+                                        @if ($errors->has('harga_lab'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('harga_lab') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
+                                <div class="d-flex justify-content-around">
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('tindakan') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-tindakan">{{ __('Tindakan') }}</label>
+                                        <input type="text" value="{{$already_claim->tindakan}}" name="tindakan" id="input-tindakan" class="form-control form-control-alternative{{ $errors->has('tindakan') ? ' is-invalid' : '' }}" placeholder="{{ __('Tindakan') }}" >
+    
+                                        @if ($errors->has('tindakan'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('tindakan') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('harga_tindakan') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-harga-tindakan">{{ __('Harga Tindakan') }}</label>
+                                        <input type="number" value="{{$pasien_claim->harga_tindakan}}" name="harga-tindakan" id="input-harga-tindakan" class="form-control form-control-alternative{{ $errors->has('harga_tindakan') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Tindakan') }}" >
+    
+                                        @if ($errors->has('harga_tindakan'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('harga_tindakan') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
 
                                 <div>
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
