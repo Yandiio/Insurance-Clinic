@@ -16,7 +16,7 @@
             <div class="col-lg-6 col-5 text-right">
                 <a href="{{route('reimburse.export')}}" class="btn btn-sm btn-neutral">Export</a>
                 <a href="#" data-toggle="dropdown" class="btn btn-sm btn-neutral">Filter</a>
-                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                <div id="dropdown-filter" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
                         <h6 class="text-overflow m-0">{{ __('Filter') }}</h6>
                     </div>
@@ -26,7 +26,7 @@
                         <div class="dropdown-item">
                             <label class="form-control-label" for="status-klaim">{{ __('Status') }}</label>
                             <select class="form-control form-control-alternative" name="status" id="status-klaim">
-                                <option value="1">Belum di klaim</option>
+                                <option value="">Pilih Status</option>
                                 <option value="2">Menunggu Permohonan</option>
                                 <option value="3">Sudah di klaim</option>
                             </select>                        
@@ -114,7 +114,9 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a id="konfirm-modal" class="dropdown-item" data-toggle="modal" data-konfirmasi-id="{{$item->id}}" data-target="#modalKonfirmasi">Klaim</a>
+                                        @if ($item->id_statusklaim != 3) 
+                                            <a id="konfirm-modal" class="dropdown-item" data-toggle="modal" data-konfirmasi-id="{{$item->id}}" data-target="#modalKonfirmasi">Klaim</a>
+                                        @endif
                                         <a class="dropdown-item" href="{{ route('klaimasuransi.view', $item->id)}}">View</a>
                                     </div>
                                 </div>
@@ -166,6 +168,10 @@
 
         $('#konfirm-modal').click(function(e) {
             data = this.dataset.konfirmasiId;
+        });
+
+        $('#dropdown-filter').click(function(e) {
+            e.stopPropagation();
         });
 
         $('#konfirmasi').click(function(e) {

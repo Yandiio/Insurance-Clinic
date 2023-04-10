@@ -143,7 +143,7 @@
                                 <hr class="my-4" />
 
                                 <div class="d-flex justify-content-around">
-                                    <div class="form-group p-1 col-lg-12 {{ $errors->has('tipe-asuransi') ? ' has-danger' : '' }}">
+                                    <div class="form-group p-1 col-lg-12 {{ $errors->has('tipe_asuransi') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-tipe-asuransi">{{ __('Tipe Asuransi') }}</label>
                                         <select class="form-control form-control-alternative" name="tipe_asuransi" id="input-tipe-asuransi">
                                             <option value="">Pilih Asuransi </option>
@@ -152,9 +152,9 @@
                                             @endforeach
                                         </select>
     
-                                        @if ($errors->has('tipe-asuransi'))
+                                        @if ($errors->has('tipe_asuransi'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('tipe-asuransi') }}</strong>
+                                                <strong>{{ $errors->first('tipe_asuransi') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -164,7 +164,7 @@
 
                                 <div class="d-flex justify-content-around">
                                     <div class="form-group p-1 col-lg-6 {{ $errors->has('obat') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-obat">{{ __('Harga Obat') }}</label>
+                                        <label class="form-control-label" for="input-obat">{{ __('Obat') }}</label>
                                         <input type="text" name="obat" id="input-obat" class="form-control form-control-alternative{{ $errors->has('obat') ? ' is-invalid' : '' }}" placeholder="{{ __('Obat') }}">
     
                                         @if ($errors->has('obat'))
@@ -173,8 +173,42 @@
                                             </span>
                                         @endif
                                     </div>
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('harga_obat') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-harga-obat">{{ __('Harga Obat') }}</label>
+                                        <input type="text" name="harga_obat" id="input-harga-obat" class="form-control form-control-alternative{{ $errors->has('obat') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Obat') }}">
+    
+                                        @if ($errors->has('harga_obat'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('harga_obat') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start">
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('lab') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-lab">{{ __('Lab') }}</label>
+                                        <input type="text" name="lab" id="input-lab" class="form-control form-control-alternative{{ $errors->has('lab') ? ' is-invalid' : '' }}" placeholder="{{ __('Lab') }}">
+    
+                                        @if ($errors->has('lab'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('lab') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('harga_lab') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-harga-lab">{{ __('Harga Lab') }}</label>
+                                        <input type="text" name="harga_lab" id="input-harga-lab" class="form-control form-control-alternative{{ $errors->has('harga_lab') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Lab') }}">
+    
+                                        @if ($errors->has('harga_lab'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('harga_lab') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-around">
                                     <div class="form-group p-1 col-lg-6 {{ $errors->has('tindakan') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-tindakan">{{ __('Harga Tindakan') }}</label>
+                                        <label class="form-control-label" for="input-tindakan">{{ __('Tindakan') }}</label>
                                         <input type="text" name="tindakan" id="input-tindakan" class="form-control form-control-alternative{{ $errors->has('tindakan') ? ' is-invalid' : '' }}" placeholder="{{ __('Tindakan') }}" >
     
                                         @if ($errors->has('tindakan'))
@@ -183,15 +217,13 @@
                                             </span>
                                         @endif
                                     </div>
-                                </div>
-                                <div class="d-flex justify-content-start">
-                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('lab') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-lab">{{ __('Harga Lab') }}</label>
-                                        <input type="text" name="lab" id="input-lab" class="form-control form-control-alternative{{ $errors->has('lab') ? ' is-invalid' : '' }}" placeholder="{{ __('Lab') }}">
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('harga_tindakan') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-harga-tindakan">{{ __('Harga Tindakan') }}</label>
+                                        <input type="text" name="harga_tindakan" id="input-harga-tindakan" class="form-control form-control-alternative{{ $errors->has('harga_tindakan') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Tindakan') }}" >
     
-                                        @if ($errors->has('lab'))
+                                        @if ($errors->has('harga_tindakan'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('lab') }}</strong>
+                                                <strong>{{ $errors->first('harga_tindakan') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -235,6 +267,9 @@
                     document.getElementById('input-gol-darah').value = result.golongan_darah;
                     document.getElementById('input-tanggal-lahir').value = parts;
                     document.getElementById('input-alamat').value = result.alamat;
+                    document.getElementById('input-harga-tindakan').value = result.harga_tindakan;
+                    document.getElementById('input-harga-lab').value = result.harga_lab;
+                    document.getElementById('input-harga-obat').value = result.harga_obat;
                     document.getElementById('input-usia').value = result.usia;
                     document.getElementById('input-agama').value = result.agama;
                 }, 

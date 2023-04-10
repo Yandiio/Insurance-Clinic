@@ -25,6 +25,7 @@ use App\Http\Controllers\KlaimAsuransiController;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/latest-chart', [App\Http\Controllers\HomeController::class, 'latestLineChart'])->name('latest-chart');
 Auth::routes();
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');

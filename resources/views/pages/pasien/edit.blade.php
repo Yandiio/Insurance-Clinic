@@ -78,8 +78,8 @@
                                     <div class="form-group p-1 col-lg-12{{ $errors->has('jenis_kelamin') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-jenis-kelamin">{{ __('Jenis Kelamin') }}</label>
                                         <select class="form-control form-control-alternative" name="jenis_kelamin" id="input-jenis-kelamin">
-                                            <option value="Laki-laki">Laki-Laki</option>
-                                            <option value="Perempuan">Perempuan</option>
+                                            <option value="Laki-laki" {{$pasien->jenis_kelamin == 'Laki-laki' ? 'selected' : ''}}>Laki-Laki</option>
+                                            <option value="Perempuan" {{$pasien->jenis_kelamin == 'Perempuan' ? 'selected' : ''}}>Perempuan</option>
                                         </select>
 
                                         @if ($errors->has('jenis_kelamin'))

@@ -6,10 +6,11 @@ use App\Models\Pasien;
 use App\Models\JenisPenyakit;
 use App\Models\TipeAsuransi;
 use App\Models\KlaimAsuransi;
-use App\Models\StatusReimburse;
+use App\Models\Statusklaim_asuransi;
 use Illuminate\Http\Request;
 use App\Exports\KlaimAsuransiExport;
 use Maatwebsite\Excel\Facades\Excel;
+use DB;
 
 class KlaimAsuransiController extends Controller
 {
@@ -48,6 +49,7 @@ class KlaimAsuransiController extends Controller
     {
         $request->validate([
             'nama_lengkap' => 'required',
+            'tipe_asuransi' => 'required',
         ]);
 
         KlaimAsuransi::create([
@@ -66,12 +68,31 @@ class KlaimAsuransiController extends Controller
 
     public function search(Request $request) 
     {
-        $klaim_asuransi = KlaimAsuransi::where(function($e) use ($request) {
-            return $e->where('id_statusklaim', $request->status);
-        })->paginate(10);
+        $klaim_asuransi = DB::table('klaim_asuransi')
+                        ->join('status', 'klaim_asuransi.id_statusklaim', '=', 'status.id')
+                        ->join('users', 'klaim_asuransi.user_id', '=', 'users.id')
+                        ->join('pasien', 'klaim_asuransi.id_pasien', '=', 'pasien.id')
+                        ->join('tipe_asuransi', 'klaim_asuransi.id_tipe_asuransi', '=', 'tipe_asuransi.id')
+                        ->select('klaim_asuransi.*', 'tipe_asuransi.nama AS nama_asuransi', 'users.name', 'status.status as status_klaim', 'pasien.nama_lengkap');
 
-        return view('pages.klaim_asuransi.index', compact('klaim_asuransi'));
-    }
+        if ($request->status) {
+            $klaim_asuransi = $klaim_asuransi->where('id_statusklaim', '=', $request->status);
+        }
+
+        if ($request->pencarian) {
+            $klaim_asuransi = $klaim_asuransi->where(function($klaim_asuransi) use ($request) {
+                $klaim_asuransi->where('tipe_asuransi.nama', 'LIKE', '%'.$request->pencarian.'%')
+                      ->orWhere('pasien.nama_lengkap', 'LIKE', '%'.$request->pencarian.'%')
+                      ->orWhere('klaim_asuransi.obat', 'LIKE', '%'.$request->pencarian.'%')
+                      ->orWhere('klaim_asuransi.tindakan', 'LIKE', '%'.$request->pencarian.'%')
+                      ->orWhere('klaim_asuransi.lab', 'LIKE', '%'.$request->pencarian.'%');
+            });
+        }
+
+        $klaim_asuransi = $klaim_asuransi->paginate(10);
+
+        return view('pages.klaim_asuransi.search', compact('klaim_asuransi'));
+     }
 
     /**
      * Display the specified resource.

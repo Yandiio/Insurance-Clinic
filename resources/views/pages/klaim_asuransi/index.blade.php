@@ -29,6 +29,7 @@
                         <div class="dropdown-item">
                             <label class="form-control-label" for="status-klaim">{{ __('Status') }}</label>
                             <select class="form-control form-control-alternative" name="status" id="status-klaim">
+                                <option value="">Pilih Status</option>
                                 <option value="1">Belum di klaim</option>
                                 <option value="2">Menunggu Permohonan</option>
                                 <option value="3">Sudah di klaim</option>
@@ -92,7 +93,6 @@
                                 {{ $item->no_klaim }}
                             </td>
                             <td>
-                                {{-- - --}}
                                 {{ $item->pasien->nama_lengkap }}
                             </td>
                             <td>
@@ -118,9 +118,11 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="{{ route('klaimasuransi.edit', $item->id)}}">Edit</a>
                                         <a class="dropdown-item" href="{{ route('klaimasuransi.view', $item->id)}}">View</a>
+                                        @if(Auth::user()->roles[0]['name'] == 'Staff')
+                                        <a class="dropdown-item" href="{{ route('klaimasuransi.edit', $item->id)}}">Edit</a>
                                         <a class="dropdown-item" href="{{ route('klaimasuransi.destroy', $item->id)}}">Delete</a>
+                                        @endif
                                     </div>
                                 </div>
                             </td>
@@ -143,3 +145,11 @@
     </div>
 </div>
 @endsection
+<script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.dropdown-menu').click(function(e) {
+            e.stopPropagation();
+        });
+   });
+</script>
