@@ -116,7 +116,7 @@ class PasienController extends Controller
         $pasien->golongan_darah = $request->get('golongan_darah');
         $pasien->agama = $request->get('agama');
         $pasien->harga_obat = $request->get('harga_obat');
-        $pasien->harga_tindakan = $request->get('harga_obat');
+        $pasien->harga_tindakan = $request->get('harga_tindakan');
         $pasien->harga_lab = $request->get('harga_lab');
 
         $pasien->save();
