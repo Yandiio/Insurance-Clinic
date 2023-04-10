@@ -1,25 +1,4 @@
 @extends('layouts.section')
-
-@section('header')
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <!-- Search form -->
-    <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-        <div class="form-group mb-0">
-            <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
-            </div>
-        </div>
-        <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main"
-            aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-    </form>
-</div>
-@endsection
-
 @section('subheader')
 <div class="container-fluid">
     <div class="header-body">
@@ -110,7 +89,9 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="{{ route('pasien.edit', $item->id)}}">Edit</a>
+                                        @if (Auth::user()->role === 2)
+                                            <a class="dropdown-item" href="{{ route('pasien.edit', $item->id)}}">Edit</a>
+                                        @endif
                                         <a class="dropdown-item" href="{{ route('pasien.view', $item->id)}}">View</a>
                                         <a class="dropdown-item" href="{{ route('pasien.destroy', $item->id)}}">Delete</a>
                                     </div>

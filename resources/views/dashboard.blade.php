@@ -1,42 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.headers.cards')
+@include('layouts.headers.cards')
     
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt-7">
         <div class="row">
             <div class="col-xl-8 mb-5 mb-xl-0">
-                <div class="card bg-gradient-default shadow">
-                    <div class="card-header bg-transparent">
+                <div class="card shadow">
+                    <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-                                <h2 class="text-white mb-0">Sales value</h2>
-                            </div>
-                            <div class="col">
-                                <ul class="nav nav-pills justify-content-end">
-                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
-                                        <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                                            <span class="d-none d-md-block">Month</span>
-                                            <span class="d-md-none">M</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
-                                        <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                                            <span class="d-none d-md-block">Week</span>
-                                            <span class="d-md-none">W</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                <h3 class="mb-0">Menunggu Permohonan</h3>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <!-- Chart -->
-                        <div class="chart">
-                            <!-- Chart wrapper -->
-                            <canvas id="chart-sales" class="chart-canvas"></canvas>
-                        </div>
+                    <div class="table-responsive">
+                        <!-- Projects table -->
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Jenis Asuransi</th>
+                                    <th scope="col">Dilayani Oleh</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($menunggu_permohonan as $item)
+                                    <tr>
+                                        <th scope="row">
+                                            {{$item->nama_pasien}}
+                                        </th>
+                                        <td>
+                                            {{$item->tipe_asuransi}}
+                                        </td>
+                                        <td>
+                                            {{$item->staff}}
+                                        </td>
+                                        <td>
+                                            {{$item->status}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -45,14 +52,14 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                                <h2 class="mb-0">Total orders</h2>
+                                <h6 class="text-uppercase text-muted ls-1 mb-1">Hasil</h6>
+                                <h2 class="mb-0">Jumlah Klaim (Per 6 bulan)</h2>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <!-- Chart -->
-                        <div class="chart">
+                        <div class="chart" data-canvas="{{route('latest-chart')}}">
                             <canvas id="chart-orders" class="chart-canvas"></canvas>
                         </div>
                     </div>
@@ -65,10 +72,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Page visits</h3>
+                                <h3 class="mb-0">Data Pasien</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                <a href="{{route('pasien.index')}}" class="btn btn-sm btn-primary">See all</a>
                             </div>
                         </div>
                     </div>
@@ -77,83 +84,29 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Page name</th>
-                                    <th scope="col">Visitors</th>
-                                    <th scope="col">Unique users</th>
-                                    <th scope="col">Bounce rate</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Usia</th>
+                                    <th scope="col">Jenis Kelamin</th>
+                                    <th scope="col">Gol. Darah</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/
-                                    </th>
-                                    <td>
-                                        4,569
-                                    </td>
-                                    <td>
-                                        340
-                                    </td>
-                                    <td>
-                                        <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/index.html
-                                    </th>
-                                    <td>
-                                        3,985
-                                    </td>
-                                    <td>
-                                        319
-                                    </td>
-                                    <td>
-                                        <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/charts.html
-                                    </th>
-                                    <td>
-                                        3,513
-                                    </td>
-                                    <td>
-                                        294
-                                    </td>
-                                    <td>
-                                        <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/tables.html
-                                    </th>
-                                    <td>
-                                        2,050
-                                    </td>
-                                    <td>
-                                        147
-                                    </td>
-                                    <td>
-                                        <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/profile.html
-                                    </th>
-                                    <td>
-                                        1,795
-                                    </td>
-                                    <td>
-                                        190
-                                    </td>
-                                    <td>
-                                        <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                                    </td>
-                                </tr>
+                                @foreach ($pasien as $item)
+                                    <tr>
+                                        <th scope="row">
+                                            {{$item->nama_lengkap}}
+                                        </th>
+                                        <td>
+                                            {{$item->usia}}
+                                        </td>
+                                        <td>
+                                            {{$item->jenis_kelamin}}
+                                        </td>
+                                        <td>
+                                            {{$item->golongan_darah}}
+                                        </td>
+                                    </tr>   
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -164,10 +117,7 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Social traffic</h3>
-                            </div>
-                            <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                <h3 class="mb-0">Klaim Asuransi</h3>
                             </div>
                         </div>
                     </div>
@@ -176,102 +126,32 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Referral</th>
-                                    <th scope="col">Visitors</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Nama Asuransi</th>
+                                    <th scope="col">Jumlah Klaim</th>
+                                    <th scope="col">Persentase</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        Facebook
-                                    </th>
-                                    <td>
-                                        1,480
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <span class="mr-2">60%</span>
-                                            <div>
-                                                <div class="progress">
-                                                <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                                @foreach ($persentase_asuransi as $item)
+                                    <tr>
+                                        <th scope="row">
+                                            {{ $item->nama }}
+                                        </th>
+                                        <td>
+                                            {{ $item->jumlah }}
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <span class="mr-2">{{ round($item->persentasi, 0).'%' }}</span>
+                                                <div>
+                                                    <div class="progress">
+                                                    <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="{{ round($item->persentasi, 0)}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ round($item->persentasi, 0)}}%;"></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        Facebook
-                                    </th>
-                                    <td>
-                                        5,480
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <span class="mr-2">70%</span>
-                                            <div>
-                                                <div class="progress">
-                                                <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        Google
-                                    </th>
-                                    <td>
-                                        4,807
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <span class="mr-2">80%</span>
-                                            <div>
-                                                <div class="progress">
-                                                <div class="progress-bar bg-gradient-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        Instagram
-                                    </th>
-                                    <td>
-                                        3,678
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <span class="mr-2">75%</span>
-                                            <div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        twitter
-                                    </th>
-                                    <td>
-                                        2,645
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <span class="mr-2">30%</span>
-                                            <div>
-                                                <div class="progress">
-                                                <div class="progress-bar bg-gradient-warning" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
