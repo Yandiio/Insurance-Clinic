@@ -165,7 +165,10 @@ class KlaimAsuransiController extends Controller
      */
     public function deleteInsurance($id)
     {
-        //
+        $klaim_asuransi = KlaimAsuransi::findOrFail($id);
+        $klaim_asuransi->delete();
+
+        return redirect()->route('klaimasuransi.index')->with('success', 'klaim berhasil dihapus');
     }
 
     /**
