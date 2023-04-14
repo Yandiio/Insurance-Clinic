@@ -1,5 +1,4 @@
 @extends('layouts.app', ['title' => __('Detail Klaim Asuransi')])
-
 @section('content')
     @include('users.partials.header', [
         'title' => __('Detail Klaim Asuransi'),
@@ -35,7 +34,7 @@
                                         <label class="form-control-label" for="input-nama-lengkap">{{ __('Nama') }}</label>
                                         <select class="form-control form-control-alternative" name="nama_lengkap" id="input-nama-lengkap">
                                             @foreach ($pasien as $item)
-                                              <option value="{{$item->id}}">{{$item->nama_lengkap}}</option>
+                                              <option value="{{$item->id}}" {{ $item->id === $pasien_claim->id ? 'selected' : '' }}>{{$item->nama_lengkap}}</option>
                                             @endforeach
                                         </select>
     
@@ -82,7 +81,8 @@
                                     <div class="form-group p-1 col-lg-12{{ $errors->has('jenis_kelamin') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-jenis-kelamin">{{ __('Jenis Kelamin') }}</label>
                                         <select class="form-control form-control-alternative" name="jenis_kelamin" id="input-jenis-kelamin" >
-                                            <option>{{$pasien_claim->jenis_kelamin}}</option>
+                                            <option value="Laki-laki" {{$pasien_claim->jenis_kelamin == 'Laki-laki' ? 'selected' : "" }}>Laki-laki</option>
+                                            <option value="Perempuan" {{$pasien_claim->jenis_kelamin == 'Perempuan' ? 'selected' : "" }}>Perempuan</option>
                                         </select>
 
                                         @if ($errors->has('jenis_kelamin'))
@@ -135,7 +135,7 @@
                                         <label class="form-control-label" for="input-tipe-asuransi">{{ __('Tipe Asuransi') }}</label>
                                         <select class="form-control form-control-alternative" name="tipe_asuransi" id="input-tipe-asuransi" >
                                             @foreach ($asuransi as $item)
-                                                <option value="{{$item->id}}">{{$item->nama}}</option>
+                                                <option value="{{$item->id}}" {{$asuransi_claim->id == $item->id ? 'selected' : ''}}>{{$item->nama}}</option>
                                             @endforeach
                                         </select>
     
