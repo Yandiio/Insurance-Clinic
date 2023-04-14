@@ -6,5 +6,5 @@ Insurance Clinic is a web application for managing patient records and insurance
 
 - [x] Proceeding Insurance policy for Patient.
 - [x] Approval T&C for on-going insurance request.
-- [x] Data Master (inc, User management & category management).
-- and many more...
+- [x] Data Master (inc.. User management & category management).
+- [x] Dashboard information.
