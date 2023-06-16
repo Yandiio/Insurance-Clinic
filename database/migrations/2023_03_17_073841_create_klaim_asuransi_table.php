@@ -21,6 +21,9 @@ return new class extends Migration
             $table->char('tindakan');
             $table->char('lab');
             $table->char('obat');
+            $table->integer('harga_obat')->nullable();
+            $table->integer('harga_tindakan')->nullable();
+            $table->integer('harga_lab')->nullable();
             $table->unsignedBigInteger('id_statusklaim');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('id_pasien')->references('id')->on('pasien');

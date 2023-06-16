@@ -25,9 +25,6 @@ class PasienSeeder extends Seeder
             'jenis_kelamin' => 'Laki-laki',
             'golongan_darah' => 'O+',
             'agama' => 'Islam',
-            'harga_obat' => 50000,
-            'harga_tindakan' => 100000,
-            'harga_lab' => 250000,
             'created_at' => now(),
             'updated_at' => now()
         ]);  
@@ -42,9 +39,6 @@ class PasienSeeder extends Seeder
             'jenis_kelamin' => 'Perempuan',
             'golongan_darah' => 'B+',
             'agama' => 'Islam',
-            'harga_obat' => 50000,
-            'harga_tindakan' => 100000,
-            'harga_lab' => 250000,
             'created_at' => now(),
             'updated_at' => now()
         ]);  

@@ -26,9 +26,6 @@ return new class extends Migration
             $table->string('agama')->nullable();
             // $table->unsignedBigInteger('id_asuransi');
             // $table->foreign('id_asuransi')->references('id')->on('klaim_asuransi');
-            $table->integer('harga_obat')->nullable();
-            $table->integer('harga_tindakan')->nullable();
-            $table->integer('harga_lab')->nullable();
             $table->timestamps();
         });
     }

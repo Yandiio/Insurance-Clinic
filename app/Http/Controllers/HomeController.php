@@ -34,7 +34,7 @@ class HomeController extends Controller
                                     ->join('tipe_asuransi', 'klaim_asuransi.id_tipe_asuransi', '=', 'tipe_asuransi.id')
                                     ->orderBy('klaim_asuransi.updated_at', 'desc')
                                     ->groupBy('tipe_asuransi.nama')
-                                    ->select('tipe_asuransi.nama as nama', DB::raw('count(klaim_asuransi.id_tipe_asuransi) as jumlah,count(klaim_asuransi.id_tipe_asuransi) * 100 / (select count(*) from klaim_asuransi)  as persentasi'))
+                                    ->select('tipe_asuransi.nama as nama', DB::raw('count(klaim_asuransi.id_tipe_asuransi) as jumlah,count(klaim_asuransi.id_tipe_asuransi) * 100 / (select count(*) from klaim_asuransi) as persentasi'))
                                     ->paginate(5);
 
         $menunggu_permohonan = DB::table('klaim_asuransi')
@@ -63,7 +63,20 @@ class HomeController extends Controller
         $latest_line = DB::table('klaim_asuransi')
                     ->orderBy('klaim_asuransi.updated_at', 'asc')
                     ->select(DB::raw('MONTH(updated_at) as month, count((updated_at)) as jumlah'))
-                    ->groupBy('updated_at')
+                    ->groupBy(DB::raw('MONTH(updated_at)'))
+                    ->get();
+
+        
+        return response()->json(['data' => $latest_line]);
+    } 
+
+    public function reimburseLineChart() 
+    {
+        $latest_line = DB::table('klaim_asuransi')
+                    ->orderBy('klaim_asuransi.updated_at', 'asc')
+                    ->select(DB::raw('MONTH(updated_at) as month, count((updated_at)) as jumlah'))
+                    ->groupBy(DB::raw('MONTH(updated_at)'))
+                    ->where('id_statusklaim', '=', '3')
                     ->get();
 
         

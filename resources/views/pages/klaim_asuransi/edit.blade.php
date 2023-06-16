@@ -32,7 +32,8 @@
                                 <div class="d-flex justify-content-around">
                                     <div class="form-group p-1 col-lg-6 {{ $errors->has('nama_lengkap') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-nama-lengkap">{{ __('Nama') }}</label>
-                                        <select class="form-control form-control-alternative" name="nama_lengkap" id="input-nama-lengkap">
+                                        <select class="form-control form-control-alternative" name="nama_pasien" id="input-nama-lengkap">
+                                            <option value="">-- Pilih Pasien --</option>
                                             @foreach ($pasien as $item)
                                               <option value="{{$item->id}}" {{ $item->id === $pasien_claim->id ? 'selected' : '' }}>{{$item->nama_lengkap}}</option>
                                             @endforeach
@@ -230,3 +231,24 @@
         @include('layouts.footers.auth')
     </div>
 @endsection
+<script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.dropdown-menu').click(function(e) {
+            e.stopPropagation();
+        });
+   });
+
+   $.ajax({
+        type: 'POST',
+        url: '',
+        success: function (res) {
+            $.each(res.data, function(index, value) {
+                $('#input-nama-lengkap').val(value);
+            });
+        },
+        error: function (err) {
+            alert(err.message);
+        }
+   })
+</script>

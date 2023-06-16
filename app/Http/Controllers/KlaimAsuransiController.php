@@ -52,18 +52,38 @@ class KlaimAsuransiController extends Controller
             'tipe_asuransi' => 'required',
         ]);
 
-        KlaimAsuransi::create([
-            'user_id' => auth()->user()->id,
-            'id_pasien' => $request->nama_lengkap,
-            'id_tipe_asuransi' => $request->tipe_asuransi,
-            'tindakan' => $request->tindakan,
-            'lab' => $request->lab,
-            'obat' => $request->obat,
-            'id_statusklaim' => 2,
-            'no_klaim' => 'IFZ/'.mt_rand(100, 900).'/'.mt_rand(100,900),
-        ]);
 
-        return redirect()->route('klaimasuransi.index')->with('success', 'klaim berhasil ditambahkan');
+        try {
+            // $pasien = Pasien::create([
+            //     'nama_lengkap' => $request->nama,
+            //     'nik' => $request->nik, 
+            //     'tempat_lahir' => $request->tempat_lahir,
+            //     'tanggal_lahir' => $request->tanggal_lahir,
+            //     'alamat' => $request->alamat, 
+            //     'usia' => $request->usia, 
+            //     'jenis_kelamin' => $request->jenis_kelamin, 
+            //     'golongan_darah' => $request->golongan_darah, 
+            // ]);
+
+
+            // if (isset($pasien)) {
+                KlaimAsuransi::create([
+                    'user_id' => auth()->user()->id,
+                    // 'id_pasien' => $pasien->id,
+                    'id_pasien' => $request->nama_lengkap,
+                    'id_tipe_asuransi' => $request->tipe_asuransi,
+                    'tindakan' => $request->tindakan,
+                    'lab' => $request->lab,
+                    'obat' => $request->obat,
+                    'id_statusklaim' => 2,
+                    'no_klaim' => 'IFZ/'.mt_rand(100, 900).'/'.mt_rand(100,900),
+                ]);
+            // }
+    
+            return redirect()->route('klaimasuransi.index')->with('success', 'klaim berhasil ditambahkan');
+        } catch (Exception $e) {
+
+        }
     }
 
     public function search(Request $request) 
@@ -92,7 +112,7 @@ class KlaimAsuransiController extends Controller
         $klaim_asuransi = $klaim_asuransi->paginate(10);
 
         return view('pages.klaim_asuransi.search', compact('klaim_asuransi'));
-     }
+    }
 
     /**
      * Display the specified resource.
@@ -179,5 +199,34 @@ class KlaimAsuransiController extends Controller
     public function export() 
     {
         return Excel::download(new KlaimAsuransiExport, 'data_klaim_asuransi.xlsx');    
+    }
+
+    /**
+     * Showing report data.
+     * 
+     * @return 
+     */
+    public function report() 
+    {
+        $total_user = DB::table('users')->count();
+        $total_klaim = DB::table('klaim_asuransi')->count();
+        $tipe_asuransi = DB::table('tipe_asuransi')->get();
+
+        $pendapatan = DB::table('klaim_asuransi')
+                        ->join('tipe_asuransi', 'klaim_asuransi.id_tipe_asuransi', '=', 'tipe_asuransi.id')
+                        ->orderBy('klaim_asuransi.updated_at', 'asc')
+                        ->select(DB::raw('MONTHNAME(klaim_asuransi.updated_at) as bulan, YEAR(klaim_asuransi.updated_at) as year, (sum(klaim_asuransi.harga_obat) + sum(klaim_asuransi.harga_lab) + sum(klaim_asuransi.harga_tindakan)) as jumlah_bayaran'))
+                        ->groupBy(DB::raw('MONTHNAME(klaim_asuransi.updated_at), YEAR(klaim_asuransi.updated_at)'))->get();
+
+        $persentase_asuransi = DB::table('klaim_asuransi')
+                                    ->join('tipe_asuransi', 'klaim_asuransi.id_tipe_asuransi', '=', 'tipe_asuransi.id')
+                                    ->orderBy('klaim_asuransi.updated_at', 'desc')
+                                    ->groupBy('tipe_asuransi.nama')
+                                    ->select('tipe_asuransi.nama as nama', DB::raw('count(klaim_asuransi.id_tipe_asuransi) as jumlah,count(klaim_asuransi.id_tipe_asuransi) * 100 / (select count(*) from klaim_asuransi)  as persentasi'))
+                                    ->paginate(5);
+
+        $pasien = Pasien::paginate(5);
+
+        return view('pages.klaim_asuransi.report', compact('total_klaim', 'tipe_asuransi', 'persentase_asuransi', 'pasien', 'pendapatan'));
     }
 }

@@ -26,6 +26,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/latest-chart', [App\Http\Controllers\HomeController::class, 'latestLineChart'])->name('latest-chart');
+Route::get('/reimburse-chart', [App\Http\Controllers\HomeController::class, 'reimburseLineChart'])->name('reimburse-chart');
 Auth::routes();
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -46,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/view/{id}', [KlaimAsuransiController::class, 'detailInsurance'])->name('klaimasuransi.view');
 		Route::get('/export', [KlaimAsuransiController::class, 'export'])->name('klaimasuransi.export');
 		Route::post('/search', [KlaimAsuransiController::class, 'search'])->name('klaimasuransi.search');
+		Route::get('/report', [KlaimAsuransiController::class, 'report'])->name('klaimasuransi.report');
 	});
 	
 	// Route Reimburse Asuransi
@@ -54,7 +56,9 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('/klaim', [ReimburseController::class, 'klaimInsurance'])->name('reimburse.klaim');
 		Route::get('/view/{id}', [ReimburseController::class, 'show'])->name('reimburse.view');
 		Route::get('/export', [ReimburseController::class, 'export'])->name('reimburse.export');
+		Route::get('/export/pdf', [ReimburseController::class, 'exportPdf'])->name('reimburse.export-pdf');
 		Route::post('/search', [ReimburseController::class, 'search'])->name('reimburse.search');
+		Route::get('/report', [ReimburseController::class, 'report'])->name('reimburse.report');
 	});
 	
 	// Route Category

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pasien;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class PasienController extends Controller
 {
@@ -15,7 +16,15 @@ class PasienController extends Controller
     public function index()
     {
         $pasien = Pasien::orderBy('created_at', 'DESC')->paginate(10);
-        return view('pages.pasien.index', ['pasien'=>$pasien]);
+
+        // $client = new Client();
+        // $response = $client->request('GET', 'http://34.173.187.215/pasien');
+
+        // if ($response->getStatusCode() == 200) {
+        //     $pasien = json_decode($response->getBody(), true);
+        // }
+
+        return view('pages.pasien.index', ['pasien'=> $pasien]);
     }
 
     /**
@@ -89,7 +98,7 @@ class PasienController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage.s
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -115,9 +124,6 @@ class PasienController extends Controller
         $pasien->jenis_kelamin = $request->get('jenis_kelamin');
         $pasien->golongan_darah = $request->get('golongan_darah');
         $pasien->agama = $request->get('agama');
-        $pasien->harga_obat = $request->get('harga_obat');
-        $pasien->harga_tindakan = $request->get('harga_tindakan');
-        $pasien->harga_lab = $request->get('harga_lab');
 
         $pasien->save();
 

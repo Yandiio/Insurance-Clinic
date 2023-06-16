@@ -14,7 +14,8 @@
                 </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-                <a href="{{route('reimburse.export')}}" class="btn btn-sm btn-neutral">Export</a>
+                <a href="{{route('reimburse.export')}}" class="btn btn-sm btn-neutral">Export Excel</a>
+                <a href="{{route('reimburse.export-pdf')}}" class="btn btn-sm btn-neutral">Export PDF</a>
                 <a href="#" data-toggle="dropdown" class="btn btn-sm btn-neutral">Filter</a>
                 <div id="dropdown-filter" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
@@ -32,8 +33,25 @@
                             </select>                        
                         </div>
                         <div class="dropdown-item">
+                            <label class="form-control-label" for="tipe-asuransi">{{ __('Tipe Asuransi') }}</label>
+                            <select class="form-control form-control-alternative" name="tipe_asuransi" id="tipe-asuransi">
+                                <option value="">Pilih Tipe</option>
+                                @foreach ($tipe_asuransi as $item)
+                                    <option value="{{$item->id}}">{{$item->nama}}</option>
+                                @endforeach
+                            </select>                        
+                        </div>
+                        <div class="dropdown-item">
                             <label class="form-control-label" for="pencarian">{{ __('Pencarian') }}</label>
                             <input type="text" name="pencarian" id="pencarian" class="form-control form-control-alternative{{ $errors->has('pencarian') ? ' is-invalid' : '' }}" placeholder="{{ __('Pencarian') }}">
+                        </div>
+                        <div class="dropdown-item">
+                            <label class="form-control-label" for="start_date">{{ __('Start Date') }}</label>
+                            <input type="date" name="start_date" id="start_date" class="form-control form-control-alternative" placeholder="{{ __('Start Date') }}">
+                        </div>
+                        <div class="dropdown-item">
+                            <label class="form-control-label" for="end_date">{{ __('Pencarian') }}</label>
+                            <input type="date" name="end_date" id="end_date" class="form-control form-control-alternative" placeholder="{{ __('End Date') }}">
                         </div>
                         <div class="dropdown-divider"></div>
                         <div class="dropdown-item row">
@@ -138,7 +156,57 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      Apakah anda yakin akan reimburse data?
+                      <table>
+                        <tr>
+                            <td>Nama: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>Yandi</td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Proses: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>19-01-1990</td>
+                        </tr>
+                        <tr>
+                            <td>Status: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>Pending</td>
+                        </tr>
+                        <tr>
+                            <td>Tindakan: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>2000</td>
+                        </tr>
+                        <tr>
+                            <td>Lab: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>30000</td>
+                        </tr>
+                        <tr>
+                            <td>Obat: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>4000</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total Harga: </b></td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td><b> Rp. 100000</b></td>
+                        </tr>
+                      </table>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

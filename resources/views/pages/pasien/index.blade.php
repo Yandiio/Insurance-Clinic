@@ -14,7 +14,7 @@
                 </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-                <a href="{{route('pasien.create')}}" class="btn btn-sm btn-neutral">Tambah</a>
+                {{-- <a href="{{route('pasien.create')}}" class="btn btn-sm btn-neutral">Tambah</a> --}}
             </div>
         </div>
     </div>
@@ -40,9 +40,6 @@
                             <th scope="col" class="sort" data-sort="budget">Usia</th>
                             <th scope="col" class="sort" data-sort="budget">Jenis Kelamin</th>
                             <th scope="col" class="sort" data-sort="budget">Gol. Darah</th>
-                            <th scope="col" class="sort" data-sort="budget">Harga Obat</th>
-                            <th scope="col" class="sort" data-sort="budget">Harga Tindakan</th>
-                            <th scope="col" class="sort" data-sort="budget">Harga Lab</th>
                             <th scope="col" class="sort" data-sort="completion">Aksi</th>
                         </tr>
                     </thead>
@@ -73,15 +70,6 @@
                             <td>
                                 {{ $item->golongan_darah }}
                             </td>
-                            <td>
-                                {{ $item->harga_obat }}
-                            </td>
-                            <td>
-                                {{ $item->harga_tindakan }}
-                            </td>
-                            <td>
-                                {{ $item->harga_lab }}
-                            </td>
                             <td class="text-right">
                                 <div class="dropdown">
                                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
@@ -89,9 +77,6 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        @if (Auth::user()->roles[0]['name'] == 'Staff')
-                                            <a class="dropdown-item" href="{{ route('pasien.edit', $item->id)}}">Edit</a>
-                                        @endif
                                         <a class="dropdown-item" href="{{ route('pasien.view', $item->id)}}">View</a>
                                         <a class="dropdown-item" href="{{ route('pasien.destroy', $item->id)}}">Delete</a>
                                     </div>

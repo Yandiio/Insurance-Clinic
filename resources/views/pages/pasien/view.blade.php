@@ -127,7 +127,7 @@
                                 <hr class="my-4" />
 
                                 <div class="d-flex justify-content-around">
-                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('harga-obat') ? ' has-danger' : '' }}">
+                                    {{-- <div class="form-group p-1 col-lg-6 {{ $errors->has('harga-obat') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-harga-obat">{{ __('Harga Obat') }}</label>
                                         <input type="text" name="harga_obat" value="{{$pasien->harga_obat}}" id="input-harga-obat" class="form-control form-control-alternative{{ $errors->has('harga-obat') ? ' is-invalid' : '' }}" placeholder="{{ __('Rp. 00') }}"  disabled>
     
@@ -146,10 +146,10 @@
                                                 <strong>{{ $errors->first('harga-tindakan') }}</strong>
                                             </span>
                                         @endif
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="d-flex justify-content-start">
-                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('harga-lab') ? ' has-danger' : '' }}">
+                                    {{-- <div class="form-group p-1 col-lg-6 {{ $errors->has('harga-lab') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-harga-lab">{{ __('Harga Lab') }}</label>
                                         <input type="text" name="harga_lab" value="{{$pasien->harga_lab}}" id="input-harga-lab" class="form-control form-control-alternative{{ $errors->has('harga-lab') ? ' is-invalid' : '' }}" placeholder="{{ __('Rp. 00') }}" disabled>
     
@@ -158,7 +158,7 @@
                                                 <strong>{{ $errors->first('harga-lab') }}</strong>
                                             </span>
                                         @endif
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 <div>

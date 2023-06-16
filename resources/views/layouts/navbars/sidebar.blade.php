@@ -53,17 +53,57 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link {{ request()->is('klaim_asuransi/list') ? 'active' : '' }}" href="{{ route('klaimasuransi.index') }}">
-                          <i class="ni ni-ambulance text-red"></i> {{ __('Klaim Asuransi') }}
-                      </a>
-                    </li>
+                        <a class="nav-link {{ (request()->is('pasien') || request()->is('kategori') || request()->is('tipe_asuransi')) ? 'active' : '' }}" href="#navbar-examples-klaim" data-toggle="collapse" role="button"
+                            aria-expanded="true" aria-controls="navbar-examples-klaim">
+                            <i class="ni ni-ambulance text-red" style="color: #f4645f;"></i>
+                            <span class="nav-link-text">{{ __('Asuransi') }}</span>
+                        </a>
 
+                        <div class="collapse show" id="navbar-examples-klaim">
+                            <ul class="nav nav-sm flex-column">
+                                @if(Auth::user()->roles[0]['name'] == 'Staff' || Auth::user()->roles[0]['name'] == 'Admin')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->is('klaimasuransi/list') ? 'active' : '' }}" href="{{ route('klaimasuransi.index') }}">
+                                        {{ __('Klaim Asuransi') }}
+                                    </a>
+                                </li>
+                                @endif
+                                @if(Auth::user()->roles[0]['name'] == 'Admin')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->is('klaimasuransi/report') ? 'active' : '' }}" href="{{ route('klaimasuransi.report') }}">
+                                        {{ __('Report Klaim') }}
+                                    </a>
+                                </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
                     <li class="nav-item">
-                    @if(Auth::user()->roles[0]['name'] == 'Admin')
-                      <a class="nav-link {{ request()->is('reimburse') ? 'active' : '' }}" href="{{ route('reimburse.index') }}">
-                          <i class="ni ni-paper-diploma text-green"></i> {{ __('Reimburse') }}
-                      </a>
-                    @endif
+                        <a class="nav-link {{ (request()->is('pasien') || request()->is('kategori') || request()->is('tipe_asuransi')) ? 'active' : '' }}" href="#navbar-examples-reimburse" data-toggle="collapse" role="button"
+                            aria-expanded="true" aria-controls="navbar-examples-reimburse">
+                            <i class="ni ni-ambulance text-green"></i>
+                            <span class="nav-link-text">{{ __('Reimburse') }}</span>
+                        </a>
+
+                        <div class="collapse show" id="navbar-examples-reimburse">
+                            <ul class="nav nav-sm flex-column">
+                                @if(Auth::user()->roles[0]['name'] == 'Staff' || Auth::user()->roles[0]['name'] == 'Admin')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->is('reimburse') ? 'active' : '' }}" href="{{ route('reimburse.index') }}">
+                                        {{ __('Reimburse Pasien') }}
+                                    </a>
+                                </li>
+                                @endif
+                                @if(Auth::user()->roles[0]['name'] == 'Admin')
+                                <li class="nav-item">
+                                  <a class="nav-link {{ request()->is('reimburse/report') ? 'active' : '' }}" href="{{ route('reimburse.report') }}">
+                                      {{ __('Report Reimburse') }}
+                                  </a>
+                              </li>
+                              @endif
+
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
