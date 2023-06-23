@@ -82,15 +82,11 @@ class PasienController extends Controller
      */
     public function show($id)
     {
-        $url = 'http://45.76.183.118/api/detail-pasien';
-        $data = array(
-            'id' => $id,
-        );
-        json_encode($data);
+        $url = 'http://45.76.183.118/api/detail-pasien/'.$id;
+
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data); 
 
         // Set cURL options
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
@@ -102,11 +98,6 @@ class PasienController extends Controller
 
 
         // curl_setopt($ch, CURLOPT_URL, $url);
-
-        // // Set cURL options
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
-        // curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow any redirects
-        // curl_setopt($ch, CURLOPT_HTTPGET, true); // Set the request method to GET
 
         // Execute the cURL request
         $response = curl_exec($ch);
@@ -120,8 +111,7 @@ class PasienController extends Controller
         curl_close($ch);
 
         $pasien = json_decode($response);
-        // $pasien = $pasien->data;
-        dd($pasien);
+        $pasien = $pasien->data;
         return view('pages.pasien.view', compact('pasien'));
     }
 

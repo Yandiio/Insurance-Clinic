@@ -79,7 +79,7 @@
                                     <div class="form-group p-1 col-lg-12{{ $errors->has('jenis_kelamin') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-jenis-kelamin">{{ __('Jenis Kelamin') }}</label>
                                         <select class="form-control form-control-alternative" name="jenis_kelamin" id="input-jenis-kelamin" disabled>
-                                            <option>{{$pasien->jenis_kelamin}}</option>
+                                            <option>{{$pasien->jk}}</option>
                                         </select>
 
                                         @if ($errors->has('jenis_kelamin'))
@@ -92,7 +92,7 @@
                                 <div class="d-flex justify-content-around">
                                     <div class="form-group p-1 col-lg-6 {{ $errors->has('name') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-gol-darah">{{ __('Gol. Darah') }}</label>
-                                        <input type="text" name="golongan_darah" value="{{$pasien->golongan_darah}}" id="input-gol-darah" class="form-control form-control-alternative{{ $errors->has('golongan-darah') ? ' is-invalid' : '' }}" placeholder="{{ __('Golongan Darah') }}" required disabled>
+                                        <input type="text" name="golongan_darah" value="{{$pasien->gd}}" id="input-gol-darah" class="form-control form-control-alternative{{ $errors->has('golongan-darah') ? ' is-invalid' : '' }}" placeholder="{{ __('Golongan Darah') }}" required disabled>
     
                                         @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
