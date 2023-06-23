@@ -32,7 +32,28 @@ class KlaimAsuransiController extends Controller
      */
     public function create()
     {
-        $pasien = Pasien::get();
+        $url = 'http://45.76.183.118/api/list-pasien';
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow any redirects
+        curl_setopt($ch, CURLOPT_HTTPGET, true); // Set the request method to GET
+
+        // Execute the cURL request
+        $response = curl_exec($ch);
+
+        // Check for cURL errors
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+        }
+
+        // Close the cURL session
+        curl_close($ch);
+
+        $pasien = json_decode($response)->data;
         $jenis_penyakit = JenisPenyakit::get();
         $asuransi = TipeAsuransi::get();
 
@@ -54,35 +75,34 @@ class KlaimAsuransiController extends Controller
 
 
         try {
-            // $pasien = Pasien::create([
-            //     'nama_lengkap' => $request->nama,
-            //     'nik' => $request->nik, 
-            //     'tempat_lahir' => $request->tempat_lahir,
-            //     'tanggal_lahir' => $request->tanggal_lahir,
-            //     'alamat' => $request->alamat, 
-            //     'usia' => $request->usia, 
-            //     'jenis_kelamin' => $request->jenis_kelamin, 
-            //     'golongan_darah' => $request->golongan_darah, 
-            // ]);
+            $pasien = Pasien::create([
+                'nama_lengkap' => $request->nama,
+                'nik' => $request->nik, 
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'alamat' => $request->alamat, 
+                'usia' => $request->usia, 
+                'jenis_kelamin' => $request->jenis_kelamin, 
+                'golongan_darah' => $request->golongan_darah, 
+            ]);
 
-
-            // if (isset($pasien)) {
+            if (isset($pasien)) {
                 KlaimAsuransi::create([
                     'user_id' => auth()->user()->id,
-                    // 'id_pasien' => $pasien->id,
-                    'id_pasien' => $request->nama_lengkap,
+                    'id_pasien' => $pasien->id,
                     'id_tipe_asuransi' => $request->tipe_asuransi,
                     'tindakan' => $request->tindakan,
                     'lab' => $request->lab,
                     'obat' => $request->obat,
-                    'id_statusklaim' => 2,
+                    'id_statusklaim' => 1,
                     'no_klaim' => 'IFZ/'.mt_rand(100, 900).'/'.mt_rand(100,900),
                 ]);
-            // }
+            }
     
             return redirect()->route('klaimasuransi.index')->with('success', 'klaim berhasil ditambahkan');
+            DB::commit();
         } catch (Exception $e) {
-
+            DB::rollback();
         }
     }
 
@@ -125,6 +145,7 @@ class KlaimAsuransiController extends Controller
         $already_claim = KlaimAsuransi::find($id);
 
         $pasien = Pasien::find($already_claim->id_pasien);
+        
         $asuransi = TipeAsuransi::find($already_claim->id_tipe_asuransi);
 
         return view('pages.klaim_asuransi.view', compact('pasien', 'asuransi', 'already_claim') );
@@ -140,13 +161,73 @@ class KlaimAsuransiController extends Controller
     {
         $already_claim = KlaimAsuransi::find($id);
 
-        $pasien = Pasien::get();
+        $url = 'http://45.76.183.118/api/list-pasien';
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow any redirects
+        curl_setopt($ch, CURLOPT_HTTPGET, true); // Set the request method to GET
+
+        // Execute the cURL request
+        $response = curl_exec($ch);
+
+        // Check for cURL errors
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+        }
+
+        // Close the cURL session
+        curl_close($ch);
+
+        $pasien = json_decode($response)->data;
         $asuransi = TipeAsuransi::get();
 
         $pasien_claim = Pasien::find($already_claim->id_pasien);
         $asuransi_claim = TipeAsuransi::find($already_claim->id_tipe_asuransi);
 
         return view('pages.klaim_asuransi.edit', compact('pasien', 'asuransi', 'already_claim', 'pasien_claim', 'asuransi_claim') );
+    }
+
+    public function show(Request $request)
+    {
+        $url = 'http://45.76.183.118/api/detail-pasien/'.$request->id;
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow any redirects
+        curl_setopt($ch, CURLOPT_HTTPGET, true); // Set the request method to GET
+
+        // Execute the cURL request
+        $response = curl_exec($ch);
+
+        // Check for cURL errors
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+        }
+
+        // Close the cURL session
+        curl_close($ch);
+
+        $pasien = json_decode($response);
+        return $pasien->data;
+    }
+
+    public function view(Request $request)
+    {
+        $klaim_asuransi = KlaimAsuransi::find($request->id);
+        $pasien = Pasien::find($klaim_asuransi->id_pasien);
+        
+        $data = $klaim_asuransi;
+        $data['status'] = $data->id_statusklaim == 1 ? 'Belum diproses': '-';
+        $data['pasien'] = $pasien;
+
+        return response()->json(['data' => $data], 200);
     }
 
     /**
@@ -158,19 +239,45 @@ class KlaimAsuransiController extends Controller
      */
     public function updateInsurance(Request $request, $id)
     {
-        $request->validate([
-            'nama_lengkap' => 'required',
-        ]);
+        $pasien = Pasien::find($request->id);
 
-        $already_claim = KlaimAsuransi::find($id);
+        if (!isset($pasien)) {
+            $pasien_data = Pasien::create([
+                'nama_lengkap' => $request->nama,
+                'nik' => $request->nik, 
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'alamat' => $request->alamat, 
+                'usia' => $request->usia, 
+                'jenis_kelamin' => $request->jenis_kelamin, 
+                'golongan_darah' => $request->golongan_darah, 
+            ]);
 
-        $already_claim->user_id = auth()->user()->id;
-        $already_claim->id_pasien = $request->nama_lengkap;
-        $already_claim->id_tipe_asuransi = $request->tipe_asuransi;
-        $already_claim->tindakan = $request->tindakan;
-        $already_claim->lab = $request->lab;
-        $already_claim->obat = $request->obat;
-        $already_claim->id_statusklaim = 3;
+            if (isset($pasien)) {
+                $already_claim = KlaimAsuransi::find($id);
+    
+                $already_claim->user_id = auth()->user()->id;
+                $already_claim->id_pasien = $pasien_data->id;
+                $already_claim->id_tipe_asuransi = $request->tipe_asuransi;
+                $already_claim->tindakan = $request->tindakan;
+                $already_claim->lab = $request->lab;
+                $already_claim->obat = $request->obat;
+                $already_claim->id_statusklaim = 2;
+            }
+        }
+
+        if (isset($pasien)) {
+            $already_claim = KlaimAsuransi::find($id);
+
+            $already_claim->user_id = auth()->user()->id;
+            $already_claim->id_pasien = $pasien->id;
+            $already_claim->id_tipe_asuransi = $request->tipe_asuransi;
+            $already_claim->tindakan = $request->tindakan;
+            $already_claim->lab = $request->lab;
+            $already_claim->obat = $request->obat;
+            $already_claim->id_statusklaim = 2;
+        }
+
 
         $already_claim->save();
 

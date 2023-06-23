@@ -89,8 +89,7 @@ class ReimburseController extends Controller
         if (isset($request->id)) {
             $claimed = KlaimAsuransi::find($request->id);
 
-            $claimed->id_statusklaim = 3;
-            // $claimed->updated_at = Carbon::now();
+            $claimed->id_statusklaim = (isset($request->status) ? $request->status : 2);
             $claimed->save();
 
             return response()->json(['message' => 'Data berhasil di proses.']);

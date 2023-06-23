@@ -47,6 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/view/{id}', [KlaimAsuransiController::class, 'detailInsurance'])->name('klaimasuransi.view');
 		Route::get('/export', [KlaimAsuransiController::class, 'export'])->name('klaimasuransi.export');
 		Route::post('/search', [KlaimAsuransiController::class, 'search'])->name('klaimasuransi.search');
+		Route::get('/show', [KlaimAsuransiController::class, 'show'])->name('klaimasuransi.show');
+		Route::get('/view-insurance', [KlaimAsuransiController::class, 'view'])->name('klaimasuransi.viewins');
 		Route::get('/report', [KlaimAsuransiController::class, 'report'])->name('klaimasuransi.report');
 	});
 	

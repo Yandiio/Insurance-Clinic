@@ -4,7 +4,8 @@
     @include('users.partials.header', [
         'title' => __('Detail Pasien'),
         'class' => 'col-lg-7'
-    ])   
+    ]);
+
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -101,7 +102,7 @@
                                     </div>
                                     <div class="form-group p-1 col-lg-6 {{ $errors->has('alamat') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-alamat">{{ __('Alamat') }}</label>
-                                        <input type="text" name="alamat" value="{{$pasien->alamat}}" id="input-alamat" class="form-control form-control-alternative{{ $errors->has('alamat') ? ' is-invalid' : '' }}" placeholder="{{ __('Alamat') }}" required disabled>
+                                        <input type="text" name="alamat" value="{{$pasien->alamat_pasien->alamat}}" id="input-alamat" class="form-control form-control-alternative{{ $errors->has('alamat') ? ' is-invalid' : '' }}" placeholder="{{ __('Alamat') }}" required disabled>
     
                                         @if ($errors->has('alamat'))
                                             <span class="invalid-feedback" role="alert">

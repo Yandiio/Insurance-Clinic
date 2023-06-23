@@ -15,16 +15,31 @@ class PasienController extends Controller
      */
     public function index()
     {
-        $pasien = Pasien::orderBy('created_at', 'DESC')->paginate(10);
+        // $pasien = Pasien::orderBy('created_at', 'DESC')->paginate(10);
+        $url = 'http://45.76.183.118/api/pasien';
+        $ch = curl_init();
 
-        // $client = new Client();
-        // $response = $client->request('GET', 'http://34.173.187.215/pasien');
+        curl_setopt($ch, CURLOPT_URL, $url);
 
-        // if ($response->getStatusCode() == 200) {
-        //     $pasien = json_decode($response->getBody(), true);
-        // }
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow any redirects
+        curl_setopt($ch, CURLOPT_HTTPGET, true); // Set the request method to GET
 
-        return view('pages.pasien.index', ['pasien'=> $pasien]);
+        // Execute the cURL request
+        $response = curl_exec($ch);
+
+        // Check for cURL errors
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+        }
+
+        // Close the cURL session
+        curl_close($ch);
+
+        $pasien = json_decode($response);
+
+        return view('pages.pasien.index', ['pasien'=> $pasien->data]);
     }
 
     /**
@@ -67,7 +82,46 @@ class PasienController extends Controller
      */
     public function show($id)
     {
-        $pasien = Pasien::find($id);
+        $url = 'http://45.76.183.118/api/detail-pasien';
+        $data = array(
+            'id' => $id,
+        );
+        json_encode($data);
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data); 
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow any redirects
+        curl_setopt($ch, CURLOPT_HTTPGET, true); // Set the request method to GET
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+        ));
+
+
+        // curl_setopt($ch, CURLOPT_URL, $url);
+
+        // // Set cURL options
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response instead of outputting it
+        // curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow any redirects
+        // curl_setopt($ch, CURLOPT_HTTPGET, true); // Set the request method to GET
+
+        // Execute the cURL request
+        $response = curl_exec($ch);
+
+        // Check for cURL errors
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+        }
+
+        // Close the cURL session
+        curl_close($ch);
+
+        $pasien = json_decode($response);
+        // $pasien = $pasien->data;
+        dd($pasien);
         return view('pages.pasien.view', compact('pasien'));
     }
 

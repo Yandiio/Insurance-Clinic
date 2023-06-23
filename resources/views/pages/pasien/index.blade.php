@@ -1,6 +1,7 @@
 @extends('layouts.section')
 @section('subheader')
 <div class="container-fluid">
+    {{-- {{ dd($pasien); }} --}}
     <div class="header-body">
         <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
@@ -59,7 +60,7 @@
                                 {{ $item->tempat_lahir, $item->tanggal_lahir }}
                             </td>
                             <td>
-                                {{ $item->alamat }}
+                                {{ $item->alamat_pasien->alamat }}
                             </td>
                             <td>
                                 {{ $item->usia }}
@@ -78,7 +79,6 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                         <a class="dropdown-item" href="{{ route('pasien.view', $item->id)}}">View</a>
-                                        <a class="dropdown-item" href="{{ route('pasien.destroy', $item->id)}}">Delete</a>
                                     </div>
                                 </div>
                             </td>
@@ -91,9 +91,9 @@
             <!-- Card footer -->
             <div class="card-footer py-4">
                 <nav aria-label="...">
-                    <ul class="pagination justify-content-end mb-0">
+                    {{-- <ul class="pagination justify-content-end mb-0">
                          {{$pasien->links()}}
-                    </ul>
+                    </ul> --}}
                 </nav>
             </div>
         </div>

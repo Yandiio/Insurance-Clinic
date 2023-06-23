@@ -14,10 +14,13 @@
                 </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-                <a href="{{route('klaimasuransi.export')}}" class="btn btn-sm btn-neutral">Export</a>
+                <a href="{{route('klaimasuransi.export')}}" class="btn btn-sm btn-neutral">Export Excel</a>
+                <a href="{{route('reimburse.export-pdf')}}" class="btn btn-sm btn-neutral">Export PDF</a>
+                @if(Auth::user()->roles[0]['name'] == 'Staff')
                 <a href="{{route('klaimasuransi.create')}}" class="btn btn-sm btn-neutral">Tambah</a>
+                @endif
                 <a href="#" data-toggle="dropdown" class="btn btn-sm btn-neutral">Filter</a>
-                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                <div id="dropdown-filter" class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
                         <h6 class="text-overflow m-0">{{ __('Filter') }}</h6>
                     </div>
@@ -116,9 +119,14 @@
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="{{ route('klaimasuransi.edit', $item->id)}}">Edit</a>
+                                        @if ($item->id_statusklaim == 1) 
+                                            <a id="konfirm-modal" class="dropdown-item" data-toggle="modal" data-konfirmasi-id="{{$item->id}}" data-target="#modalKonfirmasi">Proses</a>
+                                        @endif
                                         <a class="dropdown-item" href="{{ route('klaimasuransi.view', $item->id)}}">View</a>
+                                        @if(Auth::user()->roles[0]['name'] == 'Staff' && $item->id_statusklaim == 1)
+                                        <a class="dropdown-item" href="{{ route('klaimasuransi.edit', $item->id)}}">Edit</a>
                                         <a class="dropdown-item" href="{{ route('klaimasuransi.destroy', $item->id)}}">Delete</a>
+                                        @endif
                                     </div>
                                 </div>
                             </td>
@@ -129,6 +137,75 @@
                 </table>
             </div>
 
+            <div class="modal fade" id="modalKonfirmasi" tabindex="-1" role="dialog" aria-labelledby="labelModalKonfirmasi" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modalKonfirmasi">Konfirmasi Klaim Asuransi</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <table>
+                        <tr>
+                            <td>Nama: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td><span id="modal_nama"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Proses: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td><span id="modal_tgl_proses"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Status: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td><span id="modal_status"></td>
+                        </tr>
+                        <tr>
+                            <td>Tindakan: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td><span id="modal_tindakan"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Nama Lab: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td><span id="modal_nama_lab"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Obat: </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td><span id="modal_obat"></span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Total Harga: </b></td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td><b><span id="modal_total_harga"></span></b></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" id="konfirmasi" class="btn btn-primary">Klaim Asuransi</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
             <!-- Card footer -->
             <div class="card-footer py-4">
                 <nav aria-label="...">
@@ -141,11 +218,63 @@
     </div>
 </div>
 @endsection
+
 <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('.dropdown-menu').click(function(e) {
+        
+        let data = null;
+
+        $('#konfirm-modal').click(function(e) {
+            data = this.dataset.konfirmasiId;
+
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('klaimasuransi.viewins') }}',
+                data: {
+                    'id' : data
+                },
+                success: function(res) {
+                    let result = res.data;
+                    console.log(result);
+                    document.getElementById('modal_nama').innerHTML = result.pasien.nama_lengkap;
+                    document.getElementById('modal_tgl_proses').innerHTML = result.updated_at;
+                    document.getElementById('modal_status').innerHTML = result.status;
+                    document.getElementById('modal_tindakan').innerHTML = result.harga_tindakan;
+                    document.getElementById('modal_obat').innerHTML = result.harga_obat;
+                    document.getElementById('modal_nama_lab').innerHTML = result.lab;
+                    document.getElementById('modal_total_harga').innerHTML = (result.harga_tindakan + result.harga_obat);
+                },
+                error: function(err) {
+                    alert('data tidak dapat di proses');
+                }
+            });
+        });
+
+        $('#dropdown-filter').click(function(e) {
             e.stopPropagation();
+        });
+
+        $('#konfirmasi').click(function(e) {
+            console.log(data);
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('reimburse.klaim') }}',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: data,
+                    status: 2
+                },
+                success: function(data) {
+                    alert('data berhasil diproses');
+                }, 
+                error: function(err) {
+                    alert('data tidak dapat diproses');
+                }
+            });
         });
    });
 </script>
+

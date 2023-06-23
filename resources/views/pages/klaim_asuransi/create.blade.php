@@ -33,12 +33,13 @@
                                 <div class="d-flex justify-content-around">
                                     <div class="form-group p-1 col-lg-6 {{ $errors->has('nama_lengkap') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-nama-lengkap">{{ __('Nama') }}</label>
-                                        <select class="form-control form-control-alternative" name="nama_lengkap" id="input-nama-lengkap">
+                                        <select class="form-control " name="nama_lengkap" id="input-nama-lengkap">
                                             <option value="">Pilih Pasien </option>
                                             @foreach ($pasien as $item)
                                                 <option value="{{$item->id}}">{{$item->nama_lengkap}}</option>
                                             @endforeach
                                         </select>
+                                        <input type="text" name="nama" id="input-nama" hidden>
     
                                         @if ($errors->has('nama_lengkap'))
                                             <span class="invalid-feedback" role="alert">
@@ -195,28 +196,6 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('harga_lab') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-harga-lab">{{ __('Harga Lab') }}</label>
-                                        <input type="text" name="harga_lab" id="input-harga-lab" class="form-control form-control-alternative{{ $errors->has('harga_lab') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Lab') }}">
-    
-                                        @if ($errors->has('harga_lab'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('harga_lab') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-around">
-                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('tindakan') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-tindakan">{{ __('Tindakan') }}</label>
-                                        <input type="text" name="tindakan" id="input-tindakan" class="form-control form-control-alternative{{ $errors->has('tindakan') ? ' is-invalid' : '' }}" placeholder="{{ __('Tindakan') }}" >
-    
-                                        @if ($errors->has('tindakan'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('tindakan') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
                                     <div class="form-group p-1 col-lg-6 {{ $errors->has('harga_tindakan') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-harga-tindakan">{{ __('Harga Tindakan') }}</label>
                                         <input type="text" name="harga_tindakan" id="input-harga-tindakan" class="form-control form-control-alternative{{ $errors->has('harga_tindakan') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Tindakan') }}" >
@@ -224,6 +203,18 @@
                                         @if ($errors->has('harga_tindakan'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('harga_tindakan') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start">
+                                    <div class="form-group p-1 col-lg-6 {{ $errors->has('tindakan') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-tindakan">{{ __('Tindakan') }}</label>
+                                        <input type="text" name="tindakan" id="input-tindakan" class="form-control form-control-alternative{{ $errors->has('tindakan') ? ' is-invalid' : '' }}" placeholder="{{ __('Tindakan') }}" >
+    
+                                        @if ($errors->has('tindakan'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('tindakan') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -246,35 +237,54 @@
 <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#input-nama-lengkap').click(function(e) {
-            let val = $(this).val();
+        $('#input-nama-lengkap').select2({
+            placeholder: 'Pilih nama'
+        });
+
+        $('#input-nama-lengkap').on("select2:select", function(e) {
+            var data = e.params.data;
+            console.log(data.id);
 
             $.ajax({
                 type: 'get',
-                url: '{{route('pasien.find')}}',
+                url: '{{ route('klaimasuransi.show') }}',
+                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
                 data: {
-                    id: val,
+                    id: data.id,
                 },
                 success: function(res) {
-                    let result = res.data;
+                    let result = res;
+                    console.log(res);
                     let splitDate = result.tanggal_lahir;
 
                     let parts = splitDate.split("/").reverse().reverse().join('-');
 
                     document.getElementById('input-nik').value = result.nik;
-                    document.getElementById('input-jenis-kelamin').value = result.jenis_kelamin;
+                    document.getElementById('input-jenis-kelamin').value = result.jk;
+
+                    $('#input-jenis-kelamin').val('Laki-laki').change();
+                    if (result.jk.toLowerCase() === "perempuan") {
+                        $('#input-jenis-kelamin').val('Perempuan').change();
+                    }
+
+                    document.getElementById('input-nama').value = result.nama_lengkap;
                     document.getElementById('input-tempat-lahir').value = result.tempat_lahir;
-                    document.getElementById('input-gol-darah').value = result.golongan_darah;
+                    document.getElementById('input-gol-darah').value = result.gd;
                     document.getElementById('input-tanggal-lahir').value = parts;
-                    document.getElementById('input-alamat').value = result.alamat;
-                    document.getElementById('input-harga-tindakan').value = result.harga_tindakan;
-                    document.getElementById('input-harga-lab').value = result.harga_lab;
-                    document.getElementById('input-harga-obat').value = result.harga_obat;
+                    document.getElementById('input-alamat').value = result.alamat_pasien.alamat;
+                    document.getElementById('input-tindakan').value = result.pendaftaran.tindakan_diagnosa.hasil_diagnosa;
+                    document.getElementById('input-harga-tindakan').value = result.pendaftaran.tindakan_diagnosa.harga;
+                    document.getElementById('input-obat').value = result.obat.nama_obat;
+                    document.getElementById('input-harga-obat').value = result.obat.harga_obat;
+                    document.getElementById('input-lab').value = result.lab;
                     document.getElementById('input-usia').value = result.usia;
-                    document.getElementById('input-agama').value = result.agama;
+                    document.getElementById('input-agama').value = result.ag;
                 }, 
                 error: function(err) {
-                    alert("data tidak ditemukan");
+                    alert("data not found");
                 }
             });
         });

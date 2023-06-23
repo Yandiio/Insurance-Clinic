@@ -150,7 +150,7 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="modalKonfirmasi">Konfirmasi Klaim Asuransi</h5>
+                      <h5 class="modal-title" id="modalKonfirmasi">Konfirmasi Reimburse Asuransi</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -162,55 +162,55 @@
                             <td> </td>
                             <td> </td>
                             <td> </td>
-                            <td>Yandi</td>
+                            <td><span id="modal_nama"></span></td>
                         </tr>
                         <tr>
                             <td>Tanggal Proses: </td>
                             <td> </td>
                             <td> </td>
                             <td> </td>
-                            <td>19-01-1990</td>
+                            <td><span id="modal_tgl_proses"></span></td>
                         </tr>
                         <tr>
                             <td>Status: </td>
                             <td> </td>
                             <td> </td>
                             <td> </td>
-                            <td>Pending</td>
+                            <td><span id="modal_status"></td>
                         </tr>
                         <tr>
                             <td>Tindakan: </td>
                             <td> </td>
                             <td> </td>
                             <td> </td>
-                            <td>2000</td>
+                            <td><span id="modal_tindakan"></span></td>
                         </tr>
                         <tr>
-                            <td>Lab: </td>
+                            <td>Nama Lab: </td>
                             <td> </td>
                             <td> </td>
                             <td> </td>
-                            <td>30000</td>
+                            <td><span id="modal_nama_lab"></span></td>
                         </tr>
                         <tr>
                             <td>Obat: </td>
                             <td> </td>
                             <td> </td>
                             <td> </td>
-                            <td>4000</td>
+                            <td><span id="modal_obat"></span></td>
                         </tr>
                         <tr>
                             <td><b>Total Harga: </b></td>
                             <td> </td>
                             <td> </td>
                             <td> </td>
-                            <td><b> Rp. 100000</b></td>
+                            <td><b><span id="modal_total_harga"></span></b></td>
                         </tr>
                       </table>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" id="konfirmasi" class="btn btn-primary">Klaim Asuransi</button>
+                      <button type="button" id="konfirmasi" class="btn btn-primary">Klaim</button>
                     </div>
                   </div>
                 </div>
@@ -236,6 +236,28 @@
 
         $('#konfirm-modal').click(function(e) {
             data = this.dataset.konfirmasiId;
+
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('klaimasuransi.viewins') }}',
+                data: {
+                    'id' : data
+                },
+                success: function(res) {
+                    let result = res.data;
+                    console.log(result);
+                    document.getElementById('modal_nama').innerHTML = result.pasien.nama_lengkap;
+                    document.getElementById('modal_tgl_proses').innerHTML = result.updated_at;
+                    document.getElementById('modal_status').innerHTML = result.id_statusklaim;
+                    document.getElementById('modal_tindakan').innerHTML = result.harga_tindakan;
+                    document.getElementById('modal_obat').innerHTML = result.harga_obat;
+                    document.getElementById('modal_nama_lab').innerHTML = result.lab;
+                    document.getElementById('modal_total_harga').innerHTML = (result.harga_tindakan + result.harga_obat);
+                },
+                error: function(err) {
+                    alert('data tidak dapat di proses');
+                }
+            });
         });
 
         $('#dropdown-filter').click(function(e) {
@@ -252,6 +274,7 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     id: data,
+                    status: 3
                 },
                 success: function(data) {
                     alert('data berhasil diproses');
