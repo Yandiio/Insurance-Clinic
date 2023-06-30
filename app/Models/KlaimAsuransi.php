@@ -31,7 +31,7 @@ class KlaimAsuransi extends Model
      * @var array
      */
 
-    protected $fillable = ['user_id', 'id_pasien', 'id_tipe_asuransi', 'tindakan', 'lab', 'obat', 'id_statusklaim', 'no_klaim','created_at', 'updated_at'];
+    protected $fillable = ['user_id', 'id_pasien', 'id_tipe_asuransi', 'harga_obat', 'harga_tindakan', 'tindakan', 'lab', 'obat', 'id_statusklaim', 'no_klaim','created_at', 'updated_at'];
 
     public function pasien(): BelongsTo
     {

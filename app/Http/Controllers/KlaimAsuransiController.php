@@ -57,6 +57,15 @@ class KlaimAsuransiController extends Controller
         $jenis_penyakit = JenisPenyakit::get();
         $asuransi = TipeAsuransi::get();
 
+        
+        for ($i = 0; $i < count($pasien); $i++) {
+            $pasien_exist = Pasien::where('nama_lengkap', 'LIKE', '%'.$pasien[$i]->nama_lengkap.'%')->first();
+
+            if (isset($pasien_exist)){
+                unset($pasien[$i]);
+            }
+        }
+
         return view('pages.klaim_asuransi.create', compact('pasien', 'jenis_penyakit', 'asuransi') );
     }
 
@@ -94,6 +103,8 @@ class KlaimAsuransiController extends Controller
                     'tindakan' => $request->tindakan,
                     'lab' => $request->lab,
                     'obat' => $request->obat,
+                    'harga_obat' => $request->harga_obat,
+                    'harga_tindakan' => $request->harga_tindakan, 
                     'id_statusklaim' => 1,
                     'no_klaim' => 'IFZ/'.mt_rand(100, 900).'/'.mt_rand(100,900),
                 ]);
@@ -185,6 +196,14 @@ class KlaimAsuransiController extends Controller
         $pasien = json_decode($response)->data;
         $asuransi = TipeAsuransi::get();
 
+        for ($i = 0; $i < count($pasien); $i++) {
+            $pasien_exist = Pasien::where('nama_lengkap', 'LIKE', '%'.$pasien[$i]->nama_lengkap.'%')->first();
+
+            if (isset($pasien_exist)){
+                unset($pasien[$i]);
+            }
+        }
+
         $pasien_claim = Pasien::find($already_claim->id_pasien);
         $asuransi_claim = TipeAsuransi::find($already_claim->id_tipe_asuransi);
 
@@ -261,6 +280,8 @@ class KlaimAsuransiController extends Controller
                 $already_claim->id_tipe_asuransi = $request->tipe_asuransi;
                 $already_claim->tindakan = $request->tindakan;
                 $already_claim->lab = $request->lab;
+                $already_claim->harga_obat = $request->harga_obat;
+                $already_claim->harga_tindakan = $request->harga_tindakan;
                 $already_claim->obat = $request->obat;
                 $already_claim->id_statusklaim = 2;
             }
@@ -274,6 +295,8 @@ class KlaimAsuransiController extends Controller
             $already_claim->id_tipe_asuransi = $request->tipe_asuransi;
             $already_claim->tindakan = $request->tindakan;
             $already_claim->lab = $request->lab;
+            $already_claim->harga_obat = $request->harga_obat;
+            $already_claim->harga_tindakan = $request->harga_tindakan;
             $already_claim->obat = $request->obat;
             $already_claim->id_statusklaim = 2;
         }

@@ -158,7 +158,7 @@
                                     </div>
                                     <div class="form-group p-1 col-lg-6 {{ $errors->has('harga_obat') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-harga-obat">{{ __('Harga Obat') }}</label>
-                                        <input type="number" value="{{$pasien->harga_obat}}" name="harga-obat" id="input-harga-obat" class="form-control form-control-alternative{{ $errors->has('harga_obat') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Obat') }}" disabled >
+                                        <input type="number" value="{{$already_claim->harga_obat}}" name="harga-obat" id="input-harga-obat" class="form-control form-control-alternative{{ $errors->has('harga_obat') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Obat') }}" disabled >
     
                                         @if ($errors->has('harga_obat'))
                                             <span class="invalid-feedback" role="alert">
@@ -202,7 +202,7 @@
                                     </div>
                                     <div class="form-group p-1 col-lg-6 {{ $errors->has('harga_tindakan') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-harga-tindakan">{{ __('Harga Tindakan') }}</label>
-                                        <input type="number" value="{{$pasien->harga_tindakan}}" name="harga-tindakan" id="input-harga-tindakan" class="form-control form-control-alternative{{ $errors->has('harga_tindakan') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Tindakan') }}" disabled >
+                                        <input type="number" value="{{$already_claim->harga_tindakan}}" name="harga-tindakan" id="input-harga-tindakan" class="form-control form-control-alternative{{ $errors->has('harga_tindakan') ? ' is-invalid' : '' }}" placeholder="{{ __('Harga Tindakan') }}" disabled >
     
                                         @if ($errors->has('harga_tindakan'))
                                             <span class="invalid-feedback" role="alert">
